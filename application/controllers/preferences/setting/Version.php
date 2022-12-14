@@ -6,7 +6,7 @@ class Version extends CP_Controller
 
 	public function index()
 	{
-		$this->document->config('ID', 10901090 );
+		$this->document->config('ID', 90901090 );
 		$this->document->config( 'page_title', 'Site Version' );
 
 		$this->document->view('preferences/setting/version', array(

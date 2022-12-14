@@ -2,17 +2,23 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 <!-- Footer -->
-<div class="navbar navbar-expand-lg navbar-light border-bottom-0 border-top">
-	<div class="text-center d-lg-none w-100">
-		<button type="button" class="navbar-toggler dropdown-toggle" data-toggle="collapse" data-target="#navbar-footer">
-			<i class="icon-unfold mr-2"></i>Footer</button>
-	</div>
-
-	<div class="navbar-collapse collapse" id="navbar-footer">
-		<span class="navbar-text">&copy; 2022. Copyright: <a href="#">DEMO CO,.LTD.</a></span>
-		<span class="ml-lg-auto">
-			<code data-popup="tooltip"><?php echo  (ENVIRONMENT === 'development') ?  'CI Version: <strong>' . CI_VERSION . '</strong>' : '' ?></code>
-		</span>
+<div class="navbar navbar-sm navbar-footer border-top">
+	<div class="container-fluid">
+		<span>&copy; 2022 <a href="#">DEMO CO,.LTD.</a></span>
+		<ul class="nav">
+			<li class="nav-item">
+				<div class="d-flex align-items-center mx-md-1">
+					<code>
+						<span class="d-none d-md-inline-block ms-2">
+							<?php echo  (ENVIRONMENT === 'development') ?  'CI Version:' : '' ?>
+						</span>
+						<span>
+							<?php echo  (ENVIRONMENT === 'development') ?  '<strong>' . CI_VERSION . '</strong>' : '' ?>
+						</span>
+					</code>
+				</div>
+			</li>
+		</ul>
 	</div>
 </div>
-<!-- /Footer -->
+<!-- /footer -->

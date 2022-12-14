@@ -125,8 +125,8 @@ class Auth extends CP_Controller
 			alert('The information has been registered.', base_url());
 		} else {
 			$this->document->config(array(
-				'layout'        => false,
-				'page_title'		=> 'Register',
+				'layout'		=> false,
+				'page_title'	=> 'Register',
 				'content_class'	=> 'd-flex justify-content-center align-items-center login-cover',
 			));
 

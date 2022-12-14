@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-$this->document->add_js('validate', base_url('template/global_assets/js/plugins/forms/validation/validate.min.js'));
+$this->document->add_js('validate', base_url('template/assets/js/vendor/forms/validation/validate.min.js'));
 #$this->document->add_js('messages_ko', base_url('template/global_assets/js/plugins/forms/validation/localization/messages_ko.js'));
 
 $this->document->add_inline_style ("
@@ -19,41 +19,42 @@ $this->document->add_inline_style ("
 	<div class="card mb-0">
 		<div class="card-body">
 			<div class="text-center mb-3">
-				<!--img src="<?php echo base_url( 'template/global_assets/images/logo/logo.svg' ); ?>" width="200" class="mb-1" /-->
 				<h1 class="font-weight-bold">DEMO corp.</h1>
 				<h5 class="mb-0">Login to your account</h5>
-				<span class="d-block text-muted">Your credentials</span>
+				<span class="d-block text-muted">Enter your credentials below</span>
 				<small class="d-block">( ID : test | PW : 1111 )</small>
 			</div>
 
-			<div class="form-group">
-				<div class="input-group">
-					<span class="input-group-prepend">
-						<span class="input-group-text"><i class="icon-user text-muted"></i></span>
-					</span>
-					<input type="text" class="form-control" name="login" id="login" value="<?php echo set_value( 'login', '' ); ?>" placeholder="Login ID&hellip;" />
+			<div class="mb-3">
+				<label class="form-label">Your login ID</label>
+				<div class="form-control-feedback form-control-feedback-start">
+					<input type="text" class="form-control" name="login" id="login" value="<?php echo set_value( 'login', '' ); ?>" placeholder="Login ID" />
+					<div class="form-control-feedback-icon">
+						<i class="ph-user-circle text-muted"></i>
+					</div>
 				</div>
 			</div>
 
-			<div class="form-group">
-				<div class="input-group">
-					<span class="input-group-prepend">
-						<span class="input-group-text"><i class="icon-lock2 text-muted"></i></span>
-					</span>
-					<input type="password" class="form-control" name="password" id="password" value="<?php echo set_value( 'password', '' ); ?>" placeholder="Password&hellip;" />
+			<div class="mb-3">
+				<label class="form-label">Password</label>
+				<div class="form-control-feedback form-control-feedback-start">
+					<input type="password" class="form-control" name="password" id="password" value="<?php echo set_value( 'password', '' ); ?>" placeholder="•••••••••••" />
+					<div class="form-control-feedback-icon">
+						<i class="ph-lock text-muted"></i>
+					</div>
 				</div>
 			</div>
 
-			<div class="form-group">
-				<button type="submit" class="btn btn-primary btn-block">Login</button>
+			<div class="mb-3">
+				<button type="submit" class="btn btn-primary w-100">Sign in</button>
 			</div>
 
-			<div class="form-group text-center text-muted content-divider">
+			<div class="text-center text-muted content-divider mb-3">
 				<span class="px-2">Don't have an account?</span>
 			</div>
 
-			<div class="form-group">
-				<a href="<?php echo base_url('auth/register'); ?>" class="btn btn-dark btn-block">Sign up</a>
+			<div class="mb-3">
+				<a href="<?php echo base_url('auth/register'); ?>" class="btn btn-light w-100">Sign up</a>
 			</div>
             
 			<span class="form-text text-center text-muted">&copy; 2022. Copyright: <a href="#">DEMO CO,.LTD.</a></span>

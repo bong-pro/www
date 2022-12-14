@@ -38,10 +38,10 @@ function alert_close($message='')
 
 function dismissible($color='',$message='')
 {
-	echo '<div class="alert alert-styled-left alert-dismissible ';
+	echo '<div class="alert alert-dismissible fade show ';
 	if ( !empty($color) ) echo 'alert-' . $color;
 	echo '" style="z-index: 9999; position: absolute; top: 5%; left: 50%; transform: translate(-50%, 0%);">';
-	echo '<button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>';
+	echo '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
 	echo addslashes($message);
 	echo '</div>';
 }

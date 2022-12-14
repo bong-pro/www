@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-function doc_generate_nav($nav_data=array(), $menu_id=false)
+function doc_generate_nav($nav_data=array(), $menu_id=false, $n='')
 {
 	$html = '';
 	foreach ( $nav_data AS $key => $item ) {
@@ -9,6 +9,7 @@ function doc_generate_nav($nav_data=array(), $menu_id=false)
 		$link_class = 'nav-link';
 
 		if ( $menu_id == $item['menu_id'] ) $link_class .= ' active';
+		$n = $n ? (int) $n : 4;
 
 		$link_class .= ' ' . $item['link_class'];
 
@@ -17,8 +18,12 @@ function doc_generate_nav($nav_data=array(), $menu_id=false)
 
 		$child_html = '';
 		if ( isset($item['_children']) && sizeof($item['_children']) > 0 ) {
-			$child_html .= '<ul class="nav nav-group-sub" data-submenu-title="' . html_escape($item['name']) . '">';
-			$child_html .= doc_generate_nav($item['_children'], $menu_id);
+			if ( substr($menu_id, 0, $n) == $item['menu_id'] ) {
+				$child_html .= '<ul class="nav-group-sub collapse show" data-submenu-title="' . html_escape($item['name']) . '">';
+			} else {
+				$child_html .= '<ul class="nav-group-sub collapse" data-submenu-title="' . html_escape($item['name']) . '">';
+			}
+			$child_html .= doc_generate_nav($item['_children'], $menu_id, $n + 2);
 			$child_html .= '</ul>';
 
 			$item_class .= ' nav-item-submenu';

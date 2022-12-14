@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-$this->document->add_js('gauge_basic', base_url('template/global_assets/js/plugins/visualization/echarts/echarts.min.js'));
+$this->document->add_js('gauge_basic', base_url('template/assets/js/vendor/visualization/echarts/echarts.min.js'));
 ?>
 
 <div class="row">

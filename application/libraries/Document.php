@@ -77,8 +77,8 @@ class Document
 
 			'layout'                    => true,
 			'layout_num'				=> 'layout_1/', // layout_1 ~ layout_6
-			'direction'					=> 'LTR/', // LTR, RTL
-			'theme'                     => 'default/', // dark, default, material
+			'direction'					=> 'ltr/', // ltr, rtl
+			'theme'                     => '', // dark, default, material
 			'theme_color'               => '#333',
 
 			'section__header'           => '',

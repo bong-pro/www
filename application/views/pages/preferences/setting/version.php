@@ -29,7 +29,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<?php endforeach; ?>
 	</div>
 <?php else : ?>
-	<div class="alert alert-danger alert-styled-left alert-dismissible">
-		<button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
-		<span class="font-weight-semibold">Sorry.</span> There is currently no registered version information.</div>
+	<div class="alert alert-danger alert-dismissible fade show">
+		<span class="fw-semibold">Sorry.</span> There is currently no registered version information.
+	</div>
 <?php endif; ?>

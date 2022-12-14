@@ -46,7 +46,7 @@ class CP_Controller extends CI_Controller
 		/**
 		 * auto logout
 		 */
-		$this->document->add_js('session-timeout', base_url('template/global_assets/js/plugins/extensions/session_timeout.min.js'));
+		$this->document->add_js('session-timeout', base_url('template/assets/js/vendor/extensions/session_timeout.min.js'));
 
 		/**
 		 * set parameter

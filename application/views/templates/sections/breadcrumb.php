@@ -1,12 +1,12 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
-<div class="breadcrumb-line breadcrumb-line-light header-elements-lg-inline border-top-0">
+<div class="breadcrumb-line breadcrumb-line-light header-elements-lg-inline border-top">
 
 	<!-- Top nav -->
 	<div class="d-flex">
-		<div class="breadcrumb">
-			<a href="<?php echo site_url(); ?>" class="breadcrumb-item"><i class="icon-home2 mr-2"></i>Home</a>
+		<div class="breadcrumb py-2 px-3">
+			<a href="<?php echo site_url(); ?>" class="breadcrumb-item"><i class="ph-house"></i></a>
 			<?php if ( !empty($current_menu) ) echo doc_generate_breadcrumb($current_menu); ?>
 		</div>
 		<?php if ( !empty($nav_data) ) : ?>
