@@ -1,13 +1,14 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-$this->document->add_js('moment', base_url('template/global_assets/js/plugins/ui/moment/moment.min.js'));
-$this->document->add_js('select2', base_url('template/global_assets/js/plugins/forms/selects/select2.min.js'));
-$this->document->add_js('datatables', base_url('template/global_assets/js/plugins/tables/datatables/datatables.min.js'));
-$this->document->add_js('select', base_url('template/global_assets/js/plugins/tables/datatables/extensions/select.min.js'));
-$this->document->add_js('buttons', base_url('template/global_assets/js/plugins/tables/datatables/extensions/buttons.min.js'));
+$this->document->add_js('moment', base_url('template/assets/js/vendor/ui/moment/moment.min.js'));
+$this->document->add_js('select2', base_url('template/assets/js/vendor/forms/selects/select2.min.js'));
+$this->document->add_js('datatables', base_url('template/assets/js/vendor/tables/datatables/datatables.min.js'));
 
-$this->document->add_js('validate', base_url('template/global_assets/js/plugins/forms/validation/validate.min.js'));
+$this->document->add_js('select', base_url('template/assets/js/vendor/tables/datatables/extensions/select.min.js'));
+$this->document->add_js('buttons', base_url('template/assets/js/vendor/tables/datatables/extensions/buttons.min.js'));
+
+$this->document->add_js('validate', base_url('template/assets/js/vendor/forms/validation/validate.min.js'));
 
 $this->document->add_inline_style("
 	.sorting:before {content: '' !important;}

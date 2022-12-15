@@ -7,7 +7,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<div class="d-flex">
 		<div class="breadcrumb py-2 px-3">
 			<a href="<?php echo site_url(); ?>" class="breadcrumb-item"><i class="ph-house"></i></a>
-			<?php if ( !empty($current_menu) ) echo doc_generate_breadcrumb($current_menu); ?>
+			<?php echo $menu_link = !empty($current_menu) ? doc_generate_breadcrumb($current_menu) : '<span class="breadcrumb-item">Dashboard</span>'; ?>
 		</div>
 		<?php if ( !empty($nav_data) ) : ?>
 		<a href="#" class="header-elements-toggle text-default d-lg-none"><i class="icon-more"></i></a>

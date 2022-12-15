@@ -31,7 +31,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<!-- Theme JS files -->
 	<script type="text/javascript" src="<?php echo base_url('assets/js/axios/axios.min.js'); ?>"></script>
 	<script type="text/javascript" src="<?php echo base_url('assets/js/codepress.js'); ?>"></script>
-	<script type="text/javascript" src="<?php echo base_url('assets/js/vendor/ui/prism.min.js'); ?>"></script>
 	<script type="text/javascript" src="<?php echo base_url('template/' . $layout_num . $theme . 'full/assets/js/app.js'); ?>"></script>
 	<?php $this->document->output_js(); ?>
 	<!-- /Theme JS files -->
