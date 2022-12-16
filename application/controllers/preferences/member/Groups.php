@@ -4,207 +4,194 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Groups extends CP_Controller
 {
 
-	public function index()
+	public function __construct()
 	{
+		parent::__construct();
+
+		// load model
+		$this->load->model( 'Model_groups' );
+
 		// load helper
 		$this->load->helper('directory');
 		$this->load->helper('tree');
+	}
 
-		$tree_data = directory_map('../application/views/pages');
-		$tree = doc_generate_tree_json( $tree_data, array(), null );
+	public function index()
+	{
+		$tree_data = directory_map('../application/controllers');
+		$tree = doc_generate_tree_json($tree_data, array(), null);
 
 		// load page
-		$this->document->config( 'ID', 10902020 );
-		$this->document->config( 'page_title', 'Group List' );
-		$this->document->view( 'preferences/members/groups', array(
+		$this->document->config('ID', 90902020);
+		$this->document->config('page_title', 'Group list');
+		$this->document->view('preferences/member/groups', array(
 			'tree' => $tree,
-		) );
+		));
 	}
 
 	public function list()
 	{
 		$params = array(
-			'keyword'           => $this->input->get( 'keyword' ),
-			'is_used'           => $this->input->get( 'is_used' ),
-			'start'             => $this->input->get( 'start' ),
-			'end'               => $this->input->get( 'end' ),
+			'keyword'		=> $this->input->get('keyword'),
+			'is_used'		=> $this->input->get('is_used'),
+			'start'			=> $this->input->get('start'),
+			'end'			=> $this->input->get('end'),
 
-			'limit'             => $this->input->get( 'limit' ),
-			'offset'            => $this->input->get( 'offset' ),
-			'orderby'           => $this->input->get( 'orderby' ),
-			'order'             => $this->input->get( 'order' ),
+			'limit'			=> $this->input->get('limit'),
+			'offset'		=> $this->input->get('offset'),
+			'orderby'		=> $this->input->get('orderby'),
+			'order'			=> $this->input->get('order'),
 		);
 
-		$args = array_filter( $params, function($v) {
-			return ( isset( $v ) && !is_null( $v ) );
-		} );
+		$args = array_filter($params, function($v) {
+			return (isset($v) && !is_null($v));
+		});
 
-		$this->load->model( 'Model_group' );
-		$data = $this->Model_group->list( $args );
+		$data = $this->Model_groups->list($args);
 
-		cp_api_json( $data );
+		cp_api_json($data);
 	}
 
-	public function item_get( $target_id='' )
+	public function item_get($target_id='')
 	{
-		if ( empty( $target_id ) ) {
+		if (empty($target_id)) {
 			return false;
 		}
 
-		$this->load->helper('directory');
-		$this->load->helper('tree');
-
-		$this->load->model( 'Model_group' );
-
-		$data = $this->Model_group->_item( null, array(
+		$data = $this->Model_groups->_item(null, array(
 			'group_id' => $target_id,
-		) );
+		));
 
-		if ( ! empty( $data['permission'] ) ) {
-			$tree_data = directory_map('../application/views/pages');
-			$tree = doc_generate_tree_json( $tree_data, array(), $data['permission'] );
-			$data['tree'] = $tree;
-		}
+		$select = !empty($data['permission']) ? $data['permission'] : null;
 
-		cp_api_json( $data );
+		$tree_data = directory_map('../application/controllers');
+		$tree = doc_generate_tree_json($tree_data, array(), $select);
+		$data['tree'] = $tree;
+
+		cp_api_json($data);
 	}
 
-	public function item_delete( $target_id='' )
+	public function item_delete($target_id='')
 	{
-		if ( ! empty( $target_id ) ) {
-			$this->load->model( 'Model_group' );
-			$data['result'] = $this->Model_group->_delete( $target_id, null );
+		if (!empty($target_id)) {
+			$data = $this->Model_groups->_delete($target_id, null);
 		}
 
-		cp_api_json( $data );
+		cp_api_json($data);
 	}
 
 	public function selected_delete()
 	{
-		if ( ! empty( $this->input->post() ) ) {
-			$this->load->model( 'Model_group' );
-			$data = $this->Model_group->_selected_delete( $this->input->post() );
+		if (!empty($this->input->post())) {
+			$data = $this->Model_groups->_selected_delete($this->input->post());
 		}
 
-		cp_api_json( $data );
+		cp_api_json($data);
 	}
 
-	public function status_put( $target_id='' )
+	public function status_put($target_id='')
 	{
 		$data = array(
 			'is_used' => $this->input->post( 'is_used' ),
 		);
 
-		try {
-			$update = array_filter( $data, function( $v ) {
-				return null !== $v;
-			} );
+		$data['result'] = $this->Model_groups->_update(null, $update, array(
+			'group_id' => $target_id,
+		));
 
-			if ( empty( $update ) ) {
-				throw new Exception( '수정할 데이터가 없습니다.' );
-			}
-
-			$this->load->model( 'Model_user' );
-			$data['result'] = $this->Model_user->_update( null, $update, array(
-				'user_id' => $target_id,
-			) );
-
-			$data['message'] = '정보가 업데이트 되었습니다.';
-		} catch ( Exception $e ) {
-			$data['message'] = $e->getMessage();
-		}
-
-		cp_api_json( $data );
+		cp_api_json($data);
 	}
 
-	public function item_put( $target_id='' )
+	public function item_put($target_id='')
 	{
-		// edit tree
-		$tree_count = count( $this->input->post() );
+		if (empty($this->input->post('name'))) return false;
 
+		$tree_count = count($this->input->post());
 		$tree_data = array();
 
-		for ( $i=0; $i<$tree_count; $i++ ) {
-			if ( substr( $this->input->post( $i ), 0, 1 ) === '/' ) {
-				array_push( $tree_data, $this->input->post( $i ) );
+		for ($i=0; $i<$tree_count; $i++) {
+			if ($this->input->post($i)) {
+				if (substr($this->input->post($i), 0, 1) === '/') {
+					array_push($tree_data, $this->input->post($i));
+				}
 			}
 		}
 
 		$data = array(
-			'group_name'    => $this->input->post( 'group_name' ),
-			'is_used'       => $this->input->post( 'is_used' ),
+			'name'		=> $this->input->post('name'),
+			'is_used'	=> $this->input->post('is_used'),
 		);
 
 		try {
-			$update = array_filter( $data, function( $v ) {
+			$update = array_filter($data, function($v) {
 				return null !== $v;
-			} );
+			});
 
 			$tree_count > 0 ? $update['permission'] = '"' . implode( '","', $tree_data ) . '"' : $update['permission'] = null;
 
-			if ( empty( $update ) ) {
-				throw new Exception( '수정할 데이터가 없습니다.' );
+			if (empty($update)) {
+				throw new Exception('There is on data to register');
 			}
 
-			$this->load->model( 'Model_group' );
-			$data['result'] = $this->Model_group->_update( null, $update, array(
+			$data['result'] = $this->Model_groups->_update(null, $update, array(
 				'group_id' => $target_id,
-			) );
+			));
 
-			$data['message'] = '정보가 업데이트 되었습니다.';
-		} catch ( Exception $e ) {
+			$data['message'] = 'Success';
+		} catch (Exception $e) {
 			$data['message'] = $e->getMessage();
 		}
 
-		cp_api_json( $data );
+		cp_api_json($data);
 	}
 
 	public function item_insert()
 	{
-		// edit tree
-		$tree_count = count( $this->input->post() );
+		if (empty($this->input->post('name'))) {
+			return false;
+		} else {
+			$check = $this->Model_groups->_item( null, array(
+				'name' => $this->input->post('name'),
+			));
+			if (!empty($check)) {
+				echo 'There are duplicate values';
+				return false;
+			}
+		}
 
+		$tree_count = count($this->input->post());
 		$tree_data = array();
 
-		for ( $i=0; $i<$tree_count; $i++ ) {
-			if ( substr( $this->input->post( $i ), 0, 1 ) === '/' ) {
-				array_push( $tree_data, $this->input->post( $i ) );
+		for ($i=0; $i<$tree_count; $i++) {
+			if ($this->input->post($i)) {
+				if (substr($this->input->post($i), 0, 1) === '/') {
+					array_push($tree_data, $this->input->post($i));
+				}
 			}
 		}
 
 		$data = array(
-			'group_name'	=> $this->input->post( 'group_name' ),
-			'permission'	=> '"' . implode( '","', $tree_data ) . '"',
-			'is_used'		=> $this->input->post( 'is_used' ),
+			'name'			=> $this->input->post('name'),
+			'permission'	=> '"' . implode('","', $tree_data) . '"',
+			'is_used'		=> $this->input->post('is_used'),
 		);
 
 		try {
-			$update = array_filter( $data, function( $v ) {
+			$update = array_filter($data, function($v) {
 				return null !== $v;
-			} );
+			});
 
-			if ( empty( $update ) ) {
-				throw new Exception( '등록할 데이터가 없습니다.' );
-			}
-
-			$this->load->model( 'Model_group' );
-			$check = $this->Model_group->_item( null, array(
-				'group_name' => $this->input->post( 'group_name' ),
-			) );
-
-			if ( ! empty( $check ) ) {
-				$data['message']	= '중복되는 그룹명이 있습니다.';
-				$data['confirm']	= 'N';
+			if (empty($update)) {
+				throw new Exception('There is on data to register');
 			} else {
-				$data['result']		= $this->Model_group->_insert( $update );
-				$data['message']	= '신규등록이 완료되었습니다.';
-				$data['confirm']	= 'Y';
+				$data['result']		= $this->Model_groups->_insert($update);
+				$data['message']	= 'Success';
 			}
-		} catch ( Exception $e ) {
+		} catch (Exception $e) {
 			$data['message'] = $e->getMessage();
 		}
 
-		cp_api_json( $data );
+		cp_api_json($data);
 	}
 
 }

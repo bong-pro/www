@@ -25,12 +25,12 @@ class Model_groups extends CP_Model
 	public function list($args=array())
 	{
 		$defaults = array(
-			'group_id'	=> '',
+			'group_id'		=> '',
 
 			'keyword'		=> '',
 			'is_used'		=> '',
 			'start'			=> '',
-			'end'				=> '',
+			'end'			=> '',
 
 			'select'		=> '',
 			'limit'			=> 10,

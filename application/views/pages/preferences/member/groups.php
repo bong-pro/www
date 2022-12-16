@@ -1,168 +1,158 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-$this->document->add_js( 'moment', base_url( 'template/global_assets/js/plugins/ui/moment/moment.min.js' ) );
-$this->document->add_js( 'select2', base_url( 'template/global_assets/js/plugins/forms/selects/select2.min.js' ) );
-$this->document->add_js( 'datatables', base_url( 'template/global_assets/js/plugins/tables/datatables/datatables.min.js' ) );
-$this->document->add_js( 'select', base_url( 'template/global_assets/js/plugins/tables/datatables/extensions/select.min.js' ) );
-$this->document->add_js( 'buttons', base_url( 'template/global_assets/js/plugins/tables/datatables/extensions/buttons.min.js' ) );
-$this->document->add_js( 'sweet_alert', base_url( 'template/global_assets/js/plugins/notifications/sweet_alert.min.js' ) );
+$this->document->add_js('moment', base_url('template/assets/js/vendor/ui/moment/moment.min.js'));
+$this->document->add_js('datatables', base_url('template/assets/js/vendor/tables/datatables/datatables.min.js'));
+$this->document->add_js('select', base_url('template/assets/js/vendor/tables/datatables/extensions/select.min.js'));
+$this->document->add_js('select2', base_url('template/assets/js/vendor/forms/selects/select2.min.js'));
+$this->document->add_js('buttons', base_url('template/assets/js/vendor/tables/datatables/extensions/buttons.min.js'));
 
-$this->document->add_js( 'core', base_url( 'template/global_assets/js/plugins/extensions/jquery_ui/core.min.js' ) );
-$this->document->add_js( 'effects', base_url( 'template/global_assets/js/plugins/extensions/jquery_ui/effects.min.js' ) );
-$this->document->add_js( 'interactions', base_url( 'template/global_assets/js/plugins/extensions/jquery_ui/interactions.min.js' ) );
-$this->document->add_js( 'cookie', base_url( 'template/global_assets/js/plugins/extensions/cookie.js' ) );
-$this->document->add_js( 'fancytree_all', base_url( 'template/global_assets/js/plugins/trees/fancytree_all.min.js' ) );
-$this->document->add_js( 'fancytree_childcounter', base_url( 'template/global_assets/js/plugins/trees/fancytree_childcounter.js' ) );
+$this->document->add_js('sweet_alert', base_url('template/assets/js/vendor/notifications/sweet_alert.min.js'));
+
+$this->document->add_js('fancytree_all', base_url('template/assets/js/vendor/trees/fancytree_all.min.js'));
 ?>
-<!-- table list -->
+
+<!-- Table list -->
 <div class="card data-table">
-	<div class="card-header bg-white header-elements-inline">
-		<h6 class="card-title"><i class="icon-list2 mr-2"></i><?php echo $page_title; ?></h6>
-		<div class="header-elements">
-			<div class="list-icons">
-				<ul class="list-inline list-inline-dotted mb-0">
-					<li class="list-inline-item">
-						<!--a class="list-icons-item sidebar-control sidebar-right-toggle" data-action="search"></a-->
-						<a class="list-icons-item" data-action="reload"></a>
-						<a class="list-icons-item" data-action="fullscreen"></a>
-						<!--a class="list-icons-item" data-action="remove"></a-->
-					</li>
-				</ul>
-			</div>
+	<div class="card-header d-flex align-items-center">
+		<h5 class="mb-0"><i class="ph-users-three me-1"></i><?php echo $page_title; ?></h5>
+		<div class="d-inline-flex ms-auto">
+			<a class="text-body me-2" data-card-action="reload"><i class="ph-arrows-clockwise"></i></a>
+			<a class="text-body" data-card-action="fullscreen"><i class="ph-corners-out"></i></a>
 		</div>
 	</div>
 
-	<table class="table table-striped table-xs table-hover w-100 datatables" id="table"></table>
+	<table class="table table-xs table-striped table-hover datatable-button-init-collection datatables" id="table"></table>
 </div>
 <!-- /table list -->
 
-<!-- modal add -->
-<div id="modal-add" class="modal fade" data-backdrop="static" tabindex="-1" role="dialog">
-	<div class="modal-dialog modal-ms modal-dialog-centered" role="document">
-		<form class="modal-content">
-			<div class="modal-header py-2">
-				<h5 class="modal-title"><i class="icon-upload7 mr-1"></i>신규 등록</h5>
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
+<!-- /Modal create -->
+<div id="modal-create" class="modal fade" data-backdrop="static" tabindex="-1" role="dialog">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title"><i class="ph-users-three me-1"></i>Create</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
 			</div>
 
-			<div class="modal-body">
-				<legend class="text-uppercase font-size-sm font-weight-bold">등록정보</legend>
+			<form class="form-horizontal">
+				<div class="modal-body">
+					<div class="row mb-3">
+						<label class="col-form-label col-sm-3">Status</label>
+						<div class="col-sm-9">
+							<select name="is_used" class="form-control select">
+								<option value="Y">Enabled</option>
+								<option value="N">Disabled</option>
+							</select>
+						</div>
+					</div>
 
-				<div class="form-group row">
-					<label class="col-form-label col-lg-2">그룹명<span class="text-danger ml-1">*</span></label>
-					<div class="col-lg-10">
-						<input type="text" name="group_name" class="form-control" placeholder="그룹명&hellip;" required />
+					<div class="row mb-3">
+						<label class="col-form-label col-sm-3">Group name</label>
+						<div class="col-sm-9">
+							<input type="text" name="name" class="form-control" placeholder="Group name" required />
+						</div>
+					</div>
+
+					<div class="row mb-0 p-2">
+						<label class="form-check form-check-reverse">
+							<input type="checkbox" class="form-check-input" id="create_select_all" />
+							<span class="form-check-label">Select all</span>
+						</label>
+
+						<div class="tree-checkbox-toggle border rounded p-3 tree-create"></div>
 					</div>
 				</div>
 
-				<div class="form-group row">
-					<label class="col-form-label col-lg-2">상태</label>
-					<div class="col-lg-10">
-						<select name="is_used" class="form-control select">
-							<option value="Y">활성화</option>
-							<option value="N">비활성화</option>
-						</select>
-					</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-link" data-bs-dismiss="modal"><i class="ph-x me-1"></i>Close</button>
+					<button type="submit" class="btn btn-primary"><i class="ph-check me-1"></i>Save</button>
 				</div>
-
-				<legend class="text-uppercase font-size-sm font-weight-bold">그룹권한</legend>
-
-				<label class="custom-control custom-switch custom-control-inline custom-control-right">
-					<input type="checkbox" class="custom-control-input" id="select_all">
-					<span class="custom-control-label">전체선택</span>
-				</label>
-
-				<div class="tree tree-checkbox-toggle card card-body border-left-primary border-left-2 mb-0 tree-add"></div>
-
-			</div>
-
-			<div class="modal-footer">
-				<button type="button" class="btn btn-link" data-dismiss="modal"><i class="icon-cross2 font-size-base mr-1"></i>닫기</button>
-				<button type="submit" class="btn btn-primary"><i class="icon-checkmark3 font-size-base mr-1"></i>저장</button>
-			</div>
-		</form>
+			</form>
+		</div>
 	</div>
 </div>
-<!-- /modal add -->
+<!-- /modal create -->
 
-<!-- modal status -->
+<!-- Modal status -->
 <div id="modal-status" class="modal fade" data-backdrop="static" tabindex="-1" role="dialog">
-	<div class="modal-dialog modal-sm modal-dialog-centered" role="document">
-		<form class="modal-content">
-			<div class="modal-header py-2">
-				<h5 class="modal-title"><i class="icon-pencil7 mr-1"></i>상태 변경</h5>
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
+	<div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title"><i class="ph-pencil me-1"></i>Status</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
 			</div>
 
-			<div class="modal-body">
-
-				<input type="hidden" name="group_id" />
-
-				<div class="form-group row">
-					<label class="col-form-label col-lg-2">상태</label>
-					<div class="col-lg-10">
-						<select name="is_used" class="form-control select">
-							<option value="Y">활성화</option>
-							<option value="N">비활성화</option>
-						</select>
+			<form class="form-horizontal">
+				<div class="modal-body">
+					<div class="row mb-3">
+						<div class="col-sm-12">
+							<input type="hidden" name="group_id" />
+							<select name="is_used" class="form-control select">
+								<option value="Y">Enabled</option>
+								<option value="N">Disabled</option>
+							</select>
+						</div>
 					</div>
 				</div>
-			</div>
 
-			<div class="modal-footer">
-				<button type="button" class="btn btn-link" data-dismiss="modal"><i class="icon-cross2 font-size-base mr-1"></i>닫기</button>
-				<button type="submit" class="btn btn-primary"><i class="icon-checkmark3 font-size-base mr-1"></i>저장</button>
-			</div>
-		</form>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-link" data-bs-dismiss="modal"><i class="ph-x me-1"></i>Close</button>
+					<button type="submit" class="btn btn-primary"><i class="ph-check me-1"></i>Save</button>
+				</div>
+			</form>
+		</div>
 	</div>
 </div>
 <!-- /modal status -->
 
-<!-- modal item -->
+<!-- Modal item -->
 <div id="modal-item" class="modal fade" data-backdrop="static" tabindex="-1" role="dialog">
-	<div class="modal-dialog modal-ms modal-dialog-centered" role="document">
-		<form class="modal-content">
-			<div class="modal-header py-2">
-				<h5 class="modal-title"><i class="icon-pencil7 mr-1"></i>정보 수정</h5>
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title"><i class="ph-users-three me-1"></i>Edit group</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
 			</div>
 
-			<div class="modal-body">
-				<legend class="text-uppercase font-size-sm font-weight-bold">등록정보</legend>
+			<form class="form-horizontal form-validate-jquery-item">
+				<div class="modal-body">
+					<div class="row mb-3">
+						<label class="col-form-label col-sm-3">Status</label>
+						<div class="col-sm-9">
+							<input type="hidden" name="group_id" />
+							<select name="is_used" class="form-control select">
+								<option value="Y">Enabled</option>
+								<option value="N">Disabled</option>
+							</select>
+						</div>
+					</div>
 
-				<input type="hidden" name="group_id" />
+					<div class="row mb-3">
+						<label class="col-form-label col-sm-3">Group name</label>
+						<div class="col-sm-9">
+							<input type="text" name="name" class="form-control" placeholder="Group name" required />
+						</div>
+					</div>
 
-				<div class="form-group row">
-					<label class="col-form-label col-lg-2">그룹명<span class="text-danger ml-1">*</span></label>
-					<div class="col-lg-10">
-						<input type="text" name="group_name" class="form-control" placeholder="그룹명&hellip;" required />
+					<div class="row mb-0 p-2">
+						<label class="form-check form-check-reverse">
+							<input type="checkbox" class="form-check-input" id="item_select_all" />
+							<span class="form-check-label">Select all</span>
+						</label>
+
+						<div class="m-0 p-0" id="tree-container">
+							<div class="tree-checkbox-toggle border rounded p-3 tree-item"></div>
+						</div>
 					</div>
 				</div>
 
-				<div class="form-group row">
-					<label class="col-form-label col-lg-2">상태</label>
-					<div class="col-lg-10">
-						<select name="is_used" class="form-control select">
-							<option value="Y">활성화</option>
-							<option value="N">비활성화</option>
-						</select>
-					</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-link" data-bs-dismiss="modal"><i class="ph-x me-1"></i>Close</button>
+					<button type="submit" class="btn btn-primary"><i class="ph-check me-1"></i>Save</button>
 				</div>
-
-				<legend class="text-uppercase font-size-sm font-weight-bold">그룹권한</legend>
-
-				<div id="tree-container">
-					<div class="tree card card-body border-left-primary border-left-2 mb-0 tree-selected tree-modified-item"></div>
-				</div>
-
-			</div>
-
-			<div class="modal-footer">
-				<button type="button" class="btn btn-link" data-dismiss="modal"><i class="icon-cross2 font-size-base mr-1"></i>닫기</button>
-				<button type="submit" class="btn btn-primary"><i class="icon-checkmark3 font-size-base mr-1"></i>저장</button>
-			</div>
-		</form>
+			</form>
+		</div>
 	</div>
 </div>
 <!-- /modal item -->
@@ -180,16 +170,16 @@ var data = function() {
 
 		var datatable = tableEl.DataTable( {
 			ajax : {
-				url		: cp_params.base_url + '/preferences/management/user/groups/list',
-				type	: 'GET',
-				data	: function(d) {
+				url: cp_params.base_url + '/preferences/member/groups/list',
+				type: 'GET',
+				data: function(d) {
 					// ajax 요청항목 재정의
 					var data = {
-						limit		: d.length,
-						offset	: d.start,
-						keyword	: d.search.value,
-						orderby	: d.columns[d.order[0].column].data,
-						order		: d.order[0].dir
+						limit: d.length,
+						offset: d.start,
+						keyword: d.search.value,
+						orderby: d.columns[d.order[0].column].data,
+						order: d.order[0].dir
 					};
 
 					// 필터 항목 추가
@@ -197,34 +187,33 @@ var data = function() {
 						let key = $(this).attr('name').replace(/^filter__/, '');
 						let value = $(this).val();
 
-						if ( value == '' || ($(this).is(':checkbox, :radio') && ! $(this).is(':checked')) ) {
+						if (value == '' || ($(this).is(':checkbox, :radio') && ! $(this).is(':checked'))) {
 							return;
 						}
 
-						if ( $(this).data('ionRangeSlider') ) {
+						if ($(this).data('ionRangeSlider')) {
 							let ionRangeSlider = $(this).data('ionRangeSlider');
 
-							if ( 'single' == ionRangeSlider.options.type ) {
-								if ( ionRangeSlider.result.from < ionRangeSlider.result.max ) {
+							if ('single' == ionRangeSlider.options.type) {
+								if (ionRangeSlider.result.from < ionRangeSlider.result.max) {
 									data[key] = ionRangeSlider.result.from;
 								}
 							} else {
 								data[key] = {};
 
-								if ( ionRangeSlider.result.from > ionRangeSlider.result.min ) {
+								if (ionRangeSlider.result.from > ionRangeSlider.result.min) {
 									data[key]['min'] = ionRangeSlider.result.from;
 								}
-								if ( ionRangeSlider.result.to < ionRangeSlider.result.max ) {
+								if (ionRangeSlider.result.to < ionRangeSlider.result.max) {
 									data[key]['max'] = ionRangeSlider.result.to;
 								}
 							}
-						} else if( $.isArray(value) ) {
+						} else if($.isArray(value)) {
 							data[key] = value.join();
 						} else {
 							data[key] = value;
 						}
 					});
-
 					return data;
 				},
 				dataSrc : function(response){
@@ -235,32 +224,41 @@ var data = function() {
 					return response.list;
 				},
 			},
+			drawCallback: function (settings, json) {
+				$('[data-tooltip="tooltip"]').tooltip({
+					trigger: 'hover'
+				});
+			},
 			buttons : [
 				{
-					className		: 'btn btn-primary btn-add-new',
-					text				: '<i class="icon-upload7 font-size-base mr-1"></i>신규등록'
+					titleAttr: 'Create',
+					text: '<i class="ph-plus"></i>',
+					className: 'btn btn-primary btn-create',
 				},
 				{
-					className		: 'btn btn-danger btn-delete-selected',
-					text				: '<i class="icon-trash font-size-base mr-1"></i>선택삭제'
+					titleAttr: 'Delete Selected',
+					text: '<i class="ph-trash"></i>',
+					className: 'btn btn-danger btn-delete-selected',
 				},
 				{
-					extend			: 'collection',
-					text				: '<i class="icon-three-bars"></i>',
-					className		: 'btn btn-teal btn-icon dropdown-toggle dropdown-icon-none',
-					buttons			: [
+					extend: 'collection',
+					text: '<i class="ph-list"></i>',
+					className: 'btn btn-light dropdown-toggle dropdown-icon-none',
+					buttons: [
 						{
-							extend		: 'copy',
-							text			: '<i class="icon-copy3 font-size-base mr-1"></i>선택항목 복사'
+							extend: 'copy',
+							className: 'dt-button dropdown-item',
+							text: '<i class="ph-copy-simple me-2"></i>Copy'
 						},
 						{
-							extend		: 'print',
-							text			: '<i class="icon-printer font-size-base mr-1"></i>선택항목 프린트'
+							extend: 'print',
+							className: 'dt-button dropdown-item',
+							text: '<i class="ph-printer me-2"></i>Print'
 						},
 						{
-							extend		: 'excel',
-							text			: '<i class="icon-file-download font-size-base mr-1"></i>선택항목 다운로드',
-							customize	: function (xlsx) {
+							extend: 'excel',
+							text: '<i class="ph-download-simple me-2"></i>Download',
+							customize: function (xlsx) {
 								var sheet = xlsx.xl.worksheets["sheet1.xml"];
 								$( "c[r^=E] t", sheet ).text( "" );
 							}
@@ -268,75 +266,95 @@ var data = function() {
 					]
 				},
 			],
-			order : [ [ 1,'desc' ] ],
-			createdRow : function( row, data, dataIndex ) {
-				$( row ).data( 'target-id', data.group_id );
+			columnDefs: [
+				{
+					targets: 0,
+					orderable: false,
+					className: 'select-checkbox',
+					data: null,
+					defaultContent: ''
+				}
+			],
+			select: {
+				style: 'nulti',
+				selector: 'td:first-child',
+			},
+			initComplete: function(settings, json) {
+				$('thead .select-checkbox').click(function() {
+					if ($('thead tr').hasClass('selected')) {
+						datatable.rows().deselect();
+						$('thead tr').removeClass('selected');
+					} else {
+						datatable.rows().select();
+						$('thead tr').addClass('selected');
+					}
+				});
+			},
+			order: [[1, 'desc']],
+			createdRow: function(row, data, dataIndex) {
+				$(row).data('target-id', data.group_id);
 			},
 			columns : [
+				{data: null},
 				{
-					data			: 'group_id',
-					class			: 'select-checkbox',
-					sortable	: false,
-					render		: function( data, type, row, meta ) {
-						return null;
-					}
+					title: '<center>#</center>',
+					data: 'group_id',
+					class: 'text-nowrap text-end',
+					visible: false,
 				},
 				{
-					title			: '<center style="white-space: nowrap;">일련번호</center>',
-					data			: 'group_id',
-					class			: 'text-nowrap',
-					visible		: false,
+					title: '<center>Group name</center>',
+					data: 'name',
+					class: 'text-nowrap text-start',
 				},
 				{
-					title			: '<center style="white-space: nowrap;">그룹명</center>',
-					data			: 'group_name',
-					class			: 'text-nowrap text-left',
-				},
-				{
-					title			: '<center>상태</center>',
-					data			: 'is_used',
-					class			: 'text-nowrap text-center',
-					render		: function(data, type, row, meta) {
-						if ( data === 'Y' ) {
-							var html = '<a href="#" class="badge badge-flat border-primary text-primary" data-toggle="modal" data-target="#modal-status">활성화</a>';
+					title: '<center>Status</center>',
+					data: 'is_used',
+					class: 'text-nowrap text-center',
+					render: function(data, type, row, meta) {
+						let class_y = "badge badge-flat border-primary text-primary";
+						let class_n = "badge badge-flat text-muted";
+
+						var html = '<a href="#" class="';
+						if (data === 'Y') {
+							html += class_y + '" data-bs-toggle="modal" data-bs-target="#modal-status">Enabled</a>';
+						} else if (data == 'N') {
+							html += class_n + '" data-bs-toggle="modal" data-bs-target="#modal-status">Disabled</a>';
 						} else {
-							var html = '<a href="#" class="badge badge-flat text-muted" data-toggle="modal" data-target="#modal-status">비활성화</a>';
+							html += 'text-danger">Error</a>';
 						}
 
 						return html;
 					}
 				},
 				{
-					title			: '<center>등록일</center>',
-					data			: 'created_at',
-					class			: 'text-nowrap text-center',
-					render		: function(data, type, row, meta) {
+					title: '<center>Created at</center>',
+					data: 'created_at',
+					class: 'text-nowrap text-center',
+					render: function(data, type, row, meta) {
 						let momentDt = moment(data);
-						let html = '<div>'
-							+ momentDt.isSame(moment(), 'day') ? moment.duration(momentDt.diff()).humanize() + ' ago' : momentDt.format('YYYY-MM-DD')
-							+ '</div>';
 
-						return html;
+						return momentDt.isSame(moment(), 'day')
+							? moment.duration(momentDt.diff()).humanize() + ' age'
+							: momentDt.format('YYYY-MM-DD');
 					}
 				},
 				{
-					title			: '<center><i class="icon-menu-open2"></i></center>',
-					data			: 'group_id',
-					class			: 'text-nowrap text-center',
-					sortable	: false,
-					render		: function(data, type, row, meta) {
-						let html = '<div class="list-icons">\n' +
-							'	<div class="dropdown">\n' +
-							'		<a href="#" class="list-icons-item dropdown-toggle" data-toggle="dropdown"><i class="icon-cog6"></i></a>\n' +
-							'		<div class="dropdown-menu dropdown-menu-right dropdown-menu-xs">\n' +
-							'			<div class="dropdown-header">옵션 선택</div>\n' +
-							'			<a href="#" class="dropdown-item" data-toggle="modal" data-target="#modal-item"><i class="icon-pencil7 text-primary"></i>데이터 수정</a>\n' +
-							'			<a href="#" class="dropdown-item btn-delete-item"><i class="icon-trash text-danger"></i>데이터 삭제</a>\n' +
+					title: '<center><i class="ph-list"></i></center>',
+					data: 'group_id',
+					class: 'text-nowrap text-center',
+					sortable: false,
+					render: function(data, type, row, meta) {
+						return '<div class="d-inline-flex">\n' +
+							'	<div class="dropdown position-static">\n' +
+							'		<a href="#" class="text-body" data-bs-toggle="dropdown"><i class="ph-gear"></i></a>\n' +
+							'		<div class="dropdown-menu dropdown-menu-end">\n' +
+							'			<div class="dropdown-header">Option</div>\n' +
+							'			<a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-item"><i class="ph-pencil me-2"></i>Edit</a>\n' +
+							'			<a href="#" class="dropdown-item btn-delete-item"><i class="ph-trash me-2"></i>Delete</a>\n' +
 							'		</div>\n' +
 							'	</div>\n' +
 							'</div>\n';
-
-						return html;
 					}
 				}
 			],
@@ -344,43 +362,34 @@ var data = function() {
 
 		$(':input.search-filter-item').on('change', function() {
 			datatable.ajax.reload();
-		} );
+		});
 
-		$('.btn-add-new').attr('data-toggle', 'modal').attr('data-target', '#modal-add');
+		$('.btn-create')
+			.attr('data-tooltip', 'tooltip')
+			.attr('data-bs-toggle', 'modal')
+			.attr('data-bs-target', '#modal-create');
 
-		$('thead .select-checkbox').on('click', function(e) {
-			if ( $('thead tr').hasClass('selected') ) {
-				$('thead tr').removeClass('selected');
-				$('tbody tr').removeClass('selected');
-				datatable.rows().deselect();
-			} else {
-				$('thead tr').addClass('selected');
-				$('tbody tr').addClass('selected');
-				datatable.rows().select();
-			}
-		} );
+		$('.btn-delete-selected')
+			.attr('data-tooltip', 'tooltip');
+	};
 
-	}
-
-	var _componentAddNew = function() {
-		const modalEl = $('#modal-add');
+	var _componentCreate = function() {
+		const modalEl = $('#modal-create');
 
 		modalEl.on('show.bs.modal', function(e) {
 			$(this).find('form')[0].reset();
-
 			$('select[name="is_used"]').val('Y').trigger('change');
 		} );
 
 		modalEl.on('hidden.bs.modal', function(e) {
 			$(this).find('form')[0].reset();
-
 			$('select[name="is_used"]').val('Y').trigger('change');
 		} );
 
 		$('form', modalEl).on('submit', function(e) {
 			var form_data = $(this).serialize();
 
-			var tree = $('.tree').fancytree('getTree'),
+			var tree = $('.tree-create').fancytree('getTree'),
 				node = tree.getActiveNode();
 
 			searchIDs = tree.getSelectedNodes();
@@ -392,26 +401,22 @@ var data = function() {
 			} );
 
 			$.ajax({
-				type				: 'POST',
-				url					: cp_params.base_url + '/preferences/management/user/groups/item_insert/',
-				data				: form_data,
-				dataType		: 'json',
-				error				: function(xhr, status, error) {
-					alert(xhr.responseText);
+				type: 'POST',
+				url: cp_params.base_url + '/preferences/member/groups/item_insert/',
+				data: form_data,
+				dataType: 'json',
+				error: function(xhr, status, error) {
+					if (xhr.responseText) alert(xhr.responseText);
 				},
-				success			: function(data) {
-					if ( data.confirm === 'Y' ) {
-						$('#table').DataTable().ajax.reload(null, false);
-						$('#modal-add').modal('hide');
-						alert(data.message);
-					} else {
-						alert(data.message);
-					}
+				success: function(data) {
+					$('#table').DataTable().ajax.reload(null, false);
+					$('#modal-create').modal('hide');
+					if (data.message) alert(data.message);
 				}
 			});
 			return false;
 		});
-	}
+	};
 
 	var _componentStatus = function() {
 		const modalEl = $('#modal-status');
@@ -419,7 +424,7 @@ var data = function() {
 		modalEl.on('show.bs.modal', function(e) {
 			let target_id = $(e.relatedTarget).closest('tr').data('target-id');
 
-			axios.get(cp_params.base_url + '/preferences/management/user/groups/item_get/' + target_id, {
+			axios.get(cp_params.base_url + '/preferences/member/groups/item_get/' + target_id, {
 			}).then(response => {
 				$.each(response.data, function(i, v) {
 					var the_el = $('[name="' + i + '"]');
@@ -435,7 +440,6 @@ var data = function() {
 
 		modalEl.on('hidden.bs.modal', function(e) {
 			$(this).find('form')[0].reset();
-
 			$('select[name="is_used"]').val('Y').trigger('change');
 		});
 
@@ -444,22 +448,22 @@ var data = function() {
 			let form_data = $(this).serialize();
 
 			$.ajax({
-				type				: 'POST',
-				url					: cp_params.base_url + '/preferences/management/user/groups/status_put/' + target_id,
-				data				: form_data,
-				dataType		: 'json',
-				error				: function( xhr, status, error ) {
-					alert( xhr.responseText );
+				type: 'POST',
+				url: cp_params.base_url + '/preferences/member/groups/status_put/' + target_id,
+				data: form_data,
+				dataType: 'json',
+				error: function(xhr, status, error) {
+					if (xhr.responseText) alert(xhr.responseText);
 				},
-				success			: function(data) {
+				success: function(data) {
 					$('#table').DataTable().ajax.reload(null, false);
 					$('#modal-status').modal('hide');
-					alert(data.message);
+					if (data.message) alert(data.message);
 				}
 			});
 			return false;
 		});
-	}
+	};
 
 	var _componentItem = function() {
 		const modalEl = $('#modal-item');
@@ -468,23 +472,39 @@ var data = function() {
 			$(this).find('form')[0].reset();
 			let target_id = $(e.relatedTarget).closest('tr').data('target-id');
 
-			axios.get(cp_params.base_url + '/preferences/management/user/groups/item_get/' + target_id, {
+			axios.get(cp_params.base_url + '/preferences/member/groups/item_get/' + target_id, {
 			}).then(response => {
 				$.each(response.data, function(i, v) {
 					var the_el = $('[name="' + i + '"]');
-					if ( i == 'tree' ) {
-						$('.tree-modified-item').remove();
-						$('#tree-container').append('<div class="tree card card-body border-left-primary border-left-2 mb-0 tree-selected tree-modified-item"></div>');
+					if (i == 'tree') {
+						$('.tree-item').remove();
+						$('#tree-container').append('<div class="tree-checkbox-toggle border rounded p-3 tree-item"></div>');
+
 						var tree = '[' + v + ']';
-						$('.tree-modified-item').fancytree( {
-							checkbox		: true,
-							selectMode	: 3,
-							source			: eval(tree),
+						$('.tree-item').fancytree( {
+							checkbox: true,
+							selectMode: 3,
+							source: eval(tree),
 						});
+
+						var selectAllSwitch = document.querySelector('#item_select_all');
+						selectAllSwitch.addEventListener('change', function() {
+							if (selectAllSwitch.checked) {
+								$.ui.fancytree.getTree('.tree-item').visit(function(node){
+									node.setSelected(true);
+								});
+								return false;
+							} else {
+								$.ui.fancytree.getTree('.tree-item').visit(function(node){
+									node.setSelected(false);
+								});
+								return false;
+							}
+						});	
 					} else {
-						if ( the_el.length > 0 ) {
+						if (the_el.length > 0) {
 							the_el.val(v);
-							if ( the_el.is("select") ) {
+							if (the_el.is("select")) {
 								the_el.change();
 							}
 						}
@@ -495,7 +515,6 @@ var data = function() {
 
 		modalEl.on('hidden.bs.modal', function(e) {
 			$(this).find('form')[0].reset();
-
 			$('select[name="is_used"]').val('Y').trigger('change');
 		} );
 
@@ -503,7 +522,7 @@ var data = function() {
 			let target_id = $('[name="group_id"]').val();
 			let form_data = $(this).serialize();
 
-			var tree = $('.tree-modified-item').fancytree('getTree'),
+			var tree = $('.tree-item').fancytree('getTree'),
 				node = tree.getActiveNode();
 
 			searchIDs = tree.getSelectedNodes();
@@ -515,22 +534,22 @@ var data = function() {
 			});
 
 			$.ajax({
-				type			: 'POST',
-				url				: cp_params.base_url + '/preferences/management/user/groups/item_put/' + target_id,
-				data			: form_data,
-				dataType	: 'json',
-				error			: function(xhr, status, error) {
-					alert(xhr.responseText);
+				type: 'POST',
+				url: cp_params.base_url + '/preferences/member/groups/item_put/' + target_id,
+				data: form_data,
+				dataType: 'json',
+				error: function(xhr, status, error) {
+					if (xhr.responseText) alert(xhr.responseText);
 				},
-				success		: function(data) {
+				success: function(data) {
 					$('#table').DataTable().ajax.reload(null, false);
 					$('#modal-item').modal('hide');
-					alert(data.message);
+					if (data.message) alert(data.message);
 				}
 			});
 			return false;
 		});
-	}
+	};
 
 	var _componentDeleteItem = function() {
 		const modalEl = $('table.datatables');
@@ -538,16 +557,21 @@ var data = function() {
 		modalEl.on('click', '.btn-delete-item', function(e) {
 			let target_id = $(this).closest('tr').data('target-id');
 
-			if ( confirm('삭제를 하면 복구가 불가능합니다.\n삭제를 진행하시겠습니까?') == true ) {
+			if (target_id == '1') {
+				alert('This Group cannot be deleted');
+				return false;
+			}
+
+			if (confirm('Are you sure you want to delete it?') == true) {
 				$.ajax({
-					url				: cp_params.base_url + '/preferences/management/user/groups/item_delete/' + target_id,
-					dataType	: 'json',
-					error			: function(xhr, status, error) {
-						alert(xhr.responseText);
+					url: cp_params.base_url + '/preferences/member/groups/item_delete/' + target_id,
+					dataType: 'json',
+					error: function(xhr, status, error) {
+						if (xhr.responseText) alert(xhr.responseText);
 					},
-					success		: function(data) {
+					success: function(data) {
 						$('#table').DataTable().ajax.reload(null, false);
-						alert('삭제가 완료되었습니다.');
+						alert('Delete successful');
 					}
 				});
 				return false;
@@ -555,32 +579,41 @@ var data = function() {
 				return false;
 			}
 		});
-	}
+	};
 
 	var _componentDeleteSelected = function() {
 		const modalEl = $('.data-table');
 
 		modalEl.on('click', '.btn-delete-selected', function(e) {
-			var i = 0;
+			var msg = 'Are you sure you want to delete it?';
 			var target_ids = '';
-			$('tr.selected').each(function() {
-				target_ids += '&' + i + '=' + $( this ).data( 'targetId' );
-				i++;
-			} );
+			var i = 0;
 
-			if ( target_ids.length > 0 ) {
-				if ( confirm('삭제를 하면 복구가 불가능합니다.\n선택된 아이템을 삭제하시겠습니까?') == true ) {
+			$('tr.selected').each(function() {
+				if ($(this).data('targetId')) {
+					if ($(this).data('targetId') == '1') {
+						msg += '\n(The master Group cannot be deleted)';
+						return false;
+					}
+
+					target_ids += '&' + i + '=' + $(this).data('targetId');
+					i++;
+				}
+			});
+
+			if (target_ids.length > 0) {
+				if (confirm(msg) == true) {
 					$.ajax({
 						type: 'POST',
-						url				: cp_params.base_url + '/preferences/management/user/groups/selected_delete/',
-						data			: target_ids,
-						dataType	: 'json',
-						error			: function(xhr, status, error) {
-							alert(xhr.responseText);
+						url: cp_params.base_url + '/preferences/member/groups/selected_delete/',
+						data: target_ids,
+						dataType: 'json',
+						error: function(xhr, status, error) {
+							if (xhr.responseText) alert(xhr.responseText);
 						},
-						success		: function(data) {
+						success: function(data) {
 							$('#table').DataTable().ajax.reload(null, false);
-							alert('삭제가 완료되었습니다.');
+							alert('Delete successful');
 						}
 					} );
 					return false;
@@ -588,10 +621,10 @@ var data = function() {
 					return false;
 				}
 			} else {
-				alert('선택값이 없습니다.');
+				alert('No selected');
 			}
 		});
-	}
+	};
 
 	var _componentFancytree = function() {
 		if ( !$().fancytree ) {
@@ -599,17 +632,32 @@ var data = function() {
 			return;
 		}
 
-		$('.tree-add').fancytree( {
-			checkbox		: true,
-			selectMode	: 3,
-			source			: [<?php echo $tree ?>]
+		$('.tree-create').fancytree( {
+			checkbox: true,
+			selectMode: 3,
+			source: [<?php echo $tree ?>]
 		} );
-	}
+
+		var selectAllSwitch = document.querySelector('#create_select_all');
+		selectAllSwitch.addEventListener('change', function() {
+			if (selectAllSwitch.checked) {
+				$.ui.fancytree.getTree('.tree-checkbox-toggle').visit(function(node){
+					node.setSelected(true);
+				});
+				return false;
+			} else {
+				$.ui.fancytree.getTree('.tree-checkbox-toggle').visit(function(node){
+					node.setSelected(false);
+				});
+				return false;
+			}
+		});	
+	};
 
 	return {
 		init: function() {
 			_componentDatatable();
-			_componentAddNew();
+			_componentCreate();
 			_componentStatus();
 			_componentItem();
 			_componentDeleteItem();

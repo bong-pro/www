@@ -29,7 +29,7 @@ class Model_users extends CP_Model
 			'keyword'		=> '',
 			'is_used'		=> '',
 			'start'			=> '',
-			'end'				=> '',
+			'end'			=> '',
 
 			'select'		=> '',
 			'limit'			=> 10,

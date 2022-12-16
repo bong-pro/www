@@ -8,11 +8,7 @@
  * Data Table
  **/
 
-// Table Sorting
-//.sorting:after { font-size: 1.4rem!important; }
-//.sorting:before { display: none!important; }
-
-// Select Checkbox All
+/* Select Checkbox All */
 .select-checkbox { position: relative }
 .dataTable thead .select-checkbox:after, .dataTable thead .select-checkbox:before {
 	display: inline-block;

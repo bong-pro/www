@@ -226,7 +226,8 @@ var CodePress = function () {
 
 		const displayLength = sessionStorage.getItem('ui_datatable_length') !== null ? parseInt(sessionStorage.getItem('ui_datatable_length')) : 10;
 		$.extend(true, $.fn.dataTable.defaults, {
-			dom: '<"datatable-spinner"r><"datatable-header"flB><"datatable-scroll datatable-scroll-wrap"t><"datatable-footer"ip>',
+			dom: '<"datatable-header justify-content-start"f<"ms-sm-auto"B><"ms-sm-3"l>><"datatable-scroll"t><"datatable-footer"ip>',
+			autoWidth: false,
 			retrieve: true,
 			processing: true,
 			serverSide: true,

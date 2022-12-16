@@ -66,9 +66,9 @@ if($this->session->flashdata('message')) echo $this->session->flashdata('message
 			</div>
 
 			<div class="mb-3">
-				<label class="form-dabel">Confirm password</label>
+				<label class="form-dabel">Your name</label>
 				<div class="form-control-feedback form-control-feedback-start">
-					<input type="text" class="form-control" name="name" id="name" placeholder="Your name" />
+					<input type="text" class="form-control" name="name" id="name" placeholder="Name" />
 					<div class="form-control-feedback-icon">
 						<i class="ph-user-circle text-muted"></i>
 					</div>
@@ -78,7 +78,7 @@ if($this->session->flashdata('message')) echo $this->session->flashdata('message
 			<div class="mb-3">
 				<label class="form-dabel">Your email</label>
 				<div class="form-control-feedback form-control-feedback-start">
-					<input type="text" class="form-control" name="email" id="email" placeholder="Your email" />
+					<input type="text" class="form-control" name="email" id="email" placeholder="Email" />
 					<div class="form-control-feedback-icon">
 						<i class="ph-at text-muted"></i>
 					</div>
