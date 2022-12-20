@@ -31,13 +31,53 @@ class Model_menus extends CP_Model
 	 */
 	public function list( $parent_menu_id=0 )
 	{
+		/**
+		 * 페이지 그룹 권한
+		 **/
+		if (uri_string() !== '') {
+			$uri_top		= '/';
+			$uri_group		= $uri_top . uri_string();
+			$uri_dashboard	= '/dashboard';
+			$uri_sub		= '-';
+			$group_power	= null;
+
+			if (!empty($this->user->item('group_id'))) {
+				$this->db->select('permission');
+				$this->db->from('groups');
+				$this->db->where('group_id', $this->user->item('group_id'));
+				$this->db->limit(1);
+
+				$query = $this->db->get();
+				$group = $query->row_array();
+
+				if (!empty($group['permission'])){
+					$permission = explode(',', str_replace('"', '', $group['permission']));
+
+					for ($i=0; $i<count($permission); $i++) {
+						if ($uri_group == $permission[$i] || $uri_group == $uri_top || $uri_group == $uri_dashboard || strpos($uri_group, $uri_sub)) {
+							$group_power = true;
+							break;
+						} else {
+							$group_power = false;
+						}
+					}
+				} else {
+					$group_power = $uri_group == $uri_top || $uri_group == $uri_dashboard ? true : false;
+				}
+			} else {
+				$group_power = $uri_group == $uri_top || $uri_group == $uri_dashboard || strpos($uri_group, $uri_sub) ? true : false;
+			}
+			$message = $group_power == false ? "<script>alert('The page is not authorized');history.go(-1)</script>" : '';
+			echo $message;
+		}
+
 		$cache_name= strtolower( __CLASS__ . '-' . __FUNCTION__ );
 		$cache_time = cp_config_item( 'cache_lifetime', 60 * 60 );
 
-		//if ( FALSE === ( $data = $this->cache->get( $cache_name ) ) ) {
-			$data = $this->_recursive_list( $parent_menu_id );
-			$this->cache->save( $cache_name, $data, $cache_time );
-		//}
+		if (FALSE === ($data = $this->cache->get($cache_name))) {
+			$data = $this->_recursive_list($parent_menu_id);
+			$this->cache->save($cache_name, $data, $cache_time);
+		}
 
 		return $data;
 	}
@@ -132,7 +172,7 @@ class Model_menus extends CP_Model
 	public function links( $args=array() )
 	{
 		$select	= "link";
-		$where	= "link NOT IN ('#', '/home/dashboard')";
+		$where	= "link NOT IN ('#', '/dashboard')";
 
 		return $this->_list(
 			$select,

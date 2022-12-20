@@ -288,7 +288,7 @@ var data = function() {
 						} else {
 							data[key] = value;
 						}
-					} );
+					});
 					return data;
 				},
 				dataSrc: function(response){
@@ -353,7 +353,7 @@ var data = function() {
 			],
 			select: {
 				style: 'multi',
-				selector: 'td:first-child',
+				selector: 'td:first-child'
 			},
 			initComplete: function(settings, json) {
 				$('thead .select-checkbox').click(function() {
@@ -681,7 +681,7 @@ var data = function() {
 			$(this).find('form')[0].reset();
 			$('select[name="is_used"]').val('Y').trigger('change');
 			$('select[name="group_id"]').val('').trigger('change');
-		} );
+		});
 
 		$('form', modalEl).on('submit', function(e) {
 			let target_id = $('[name="user_id"]').val();

@@ -1,5 +1,14 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+
+$group_permission = explode(',', str_replace('"', '', $this->user->item('group_permission')));
+array_push($group_permission, '/dashboard');
+$title_permission = array('main');
+foreach ($group_permission as $value) {
+	$array = explode('/', $value);
+	array_push($title_permission, $array[1]);
+}
+$title_permission = array_unique($title_permission);
 ?>
 <!-- Main sidebar -->
 <div class="sidebar sidebar-dark sidebar-main sidebar-expand-lg">
@@ -39,18 +48,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<!-- /header -->
 
 		<!-- Main navigation -->
-		<?php if ( ! empty( $nav_data ) ) : ?>
+		<?php if (!empty($nav_data)) : ?>
 		<div class="sidebar-section">
 			<ul class="nav nav-sidebar" data-nav-type="accordion">
 
-				<?php foreach ( $nav_data as $item ) : ?> 
+				<?php foreach ($nav_data as $item) : ?> 
+				<?php if (in_array(strtolower($item['name']), $title_permission)) : ?>
 				<li class="nav-item-header" <?php echo html_escape($item['link_class']); ?>>
 					<div class="text-uppercase fs-sm lh-sm opacity-50 sidebar-resize-hide">
 						<?php echo $item['before_html'] . '<span>' . $item['name'] . '</span>' . $item['after_html']; ?>
 					</div>
 					<i class="ph-dots-three sidebar-resize-show" title="<?php echo html_escape($item['name']); ?>"></i>
 				</li>
-				<?php echo doc_generate_nav($item['_children'], $document_ID); ?>
+				<?php echo doc_generate_nav($item['_children'], $document_ID, null, $group_permission); ?>
+				<?php endif; ?>
 				<?php endforeach; ?>
 
 			</ul>

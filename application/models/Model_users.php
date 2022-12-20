@@ -43,7 +43,8 @@ class Model_users extends CP_Model
 			$args['select'] = "
 				{$this->_table}.*,
 				groups.group_id AS group_id,
-				groups.name AS group_name
+				groups.name AS group_name,
+				groups.permission AS group_permission
 			";
 		}
 

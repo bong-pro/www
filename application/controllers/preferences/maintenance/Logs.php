@@ -18,7 +18,7 @@ class Logs extends CP_Controller
 			$log_html .= '<br>-----------------------------------------<br>';
 		}
 
-		$this->document->config('ID', 90903090);
+		$this->document->config('ID', 903010);
 		$this->document->config('page_title', 'LOG');
 		$this->document->view('preferences/maintenance/logs', array(
 			'logs' => $log_html,

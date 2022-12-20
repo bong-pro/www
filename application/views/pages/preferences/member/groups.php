@@ -358,7 +358,7 @@ var data = function() {
 					}
 				}
 			],
-		} );
+		});
 
 		$(':input.search-filter-item').on('change', function() {
 			datatable.ajax.reload();
@@ -379,12 +379,12 @@ var data = function() {
 		modalEl.on('show.bs.modal', function(e) {
 			$(this).find('form')[0].reset();
 			$('select[name="is_used"]').val('Y').trigger('change');
-		} );
+		});
 
 		modalEl.on('hidden.bs.modal', function(e) {
 			$(this).find('form')[0].reset();
 			$('select[name="is_used"]').val('Y').trigger('change');
-		} );
+		});
 
 		$('form', modalEl).on('submit', function(e) {
 			var form_data = $(this).serialize();
@@ -398,7 +398,7 @@ var data = function() {
 			searchIDs.forEach(function(node) {
 				form_data += '&' + i + '=' + node.key;
 				i++;
-			} );
+			});
 
 			$.ajax({
 				type: 'POST',
@@ -516,7 +516,7 @@ var data = function() {
 		modalEl.on('hidden.bs.modal', function(e) {
 			$(this).find('form')[0].reset();
 			$('select[name="is_used"]').val('Y').trigger('change');
-		} );
+		});
 
 		$('form', modalEl).on('submit', function(e) {
 			let target_id = $('[name="group_id"]').val();
@@ -615,7 +615,7 @@ var data = function() {
 							$('#table').DataTable().ajax.reload(null, false);
 							alert('Delete successful');
 						}
-					} );
+					});
 					return false;
 				} else {
 					return false;
@@ -632,11 +632,11 @@ var data = function() {
 			return;
 		}
 
-		$('.tree-create').fancytree( {
+		$('.tree-create').fancytree({
 			checkbox: true,
 			selectMode: 3,
 			source: [<?php echo $tree ?>]
-		} );
+		});
 
 		var selectAllSwitch = document.querySelector('#create_select_all');
 		selectAllSwitch.addEventListener('change', function() {

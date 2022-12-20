@@ -22,7 +22,7 @@ class Groups extends CP_Controller
 		$tree = doc_generate_tree_json($tree_data, array(), null);
 
 		// load page
-		$this->document->config('ID', 90902020);
+		$this->document->config('ID', 902020);
 		$this->document->config('page_title', 'Group list');
 		$this->document->view('preferences/member/groups', array(
 			'tree' => $tree,
@@ -112,7 +112,7 @@ class Groups extends CP_Controller
 		for ($i=0; $i<$tree_count; $i++) {
 			if ($this->input->post($i)) {
 				if (substr($this->input->post($i), 0, 1) === '/') {
-					array_push($tree_data, $this->input->post($i));
+					array_push($tree_data, strtolower($this->input->post($i)));
 				}
 			}
 		}
@@ -165,7 +165,7 @@ class Groups extends CP_Controller
 		for ($i=0; $i<$tree_count; $i++) {
 			if ($this->input->post($i)) {
 				if (substr($this->input->post($i), 0, 1) === '/') {
-					array_push($tree_data, $this->input->post($i));
+					array_push($tree_data, strtolower($this->input->post($i)));
 				}
 			}
 		}

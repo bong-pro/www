@@ -1,32 +1,24 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-$this->document->add_js( 'moment', base_url( 'template/global_assets/js/plugins/ui/moment/moment.min.js' ) );
-$this->document->add_js( 'select2', base_url( 'template/global_assets/js/plugins/forms/selects/select2.min.js' ) );
-$this->document->add_js( 'datatables', base_url( 'template/global_assets/js/plugins/tables/datatables/datatables.min.js' ) );
-$this->document->add_js( 'select', base_url( 'template/global_assets/js/plugins/tables/datatables/extensions/select.min.js' ) );
-$this->document->add_js( 'buttons', base_url( 'template/global_assets/js/plugins/tables/datatables/extensions/buttons.min.js' ) );
-$this->document->add_js( 'sweet_alert', base_url( 'template/global_assets/js/plugins/notifications/sweet_alert.min.js' ) );
+$this->document->add_js('moment', base_url('template/assets/js/vendor/ui/moment/moment.min.js'));
+$this->document->add_js('datatables', base_url('template/assets/js/vendor/tables/datatables/datatables.min.js'));
+$this->document->add_js('select', base_url('template/assets/js/vendor/tables/datatables/extensions/select.min.js'));
+$this->document->add_js('select2', base_url('template/assets/js/vendor/forms/selects/select2.min.js'));
+$this->document->add_js('buttons', base_url('template/assets/js/vendor/tables/datatables/extensions/buttons.min.js'));
 ?>
-<!-- table list -->
+
+<!-- Table list -->
 <div class="card data-table">
-	<div class="card-header bg-white header-elements-inline">
-        <h6 class="card-title"><i class="icon-list2 mr-2"></i><?php echo $page_title; ?></h6>
-        <div class="header-elements">
-            <div class="list-icons">
-                <ul class="list-inline list-inline-dotted mb-0">
-                    <li class="list-inline-item">
-                        <!--a class="list-icons-item sidebar-control sidebar-right-toggle" data-action="search"></a-->
-                        <a class="list-icons-item" data-action="reload"></a>
-                        <a class="list-icons-item" data-action="fullscreen"></a>
-                        <!--a class="list-icons-item" data-action="remove"></a-->
-                    </li>
-                </ul>
-            </div>
-        </div>
+	<div class="card-header d-flex align-items-center">
+		<h5 class="mb-0"><i class="ph-user me-1"></i><?php echo $page_title; ?></h5>
+		<div class="d-inline-flex ms-auto">
+			<a class="text-body me-2" data-card-action="reload"><i class="ph-arrows-clockwise"></i></a>
+			<a class="text-body" data-card-action="fullscreen"><i class="ph-corners-out"></i></a>
+		</div>
     </div>
 
-	<table class="table table-striped table-xs table-hover w-100 datatables" id="table"></table>
+	<table class="table table-xs table-striped table-hover datatable-button-init-collection datatables" id="table"></table>
 </div>
 <!-- /tabel list -->
 
@@ -390,58 +382,58 @@ var data = function() {
 			return;
 		}
 
-		const tableEl = $( 'table.datatables' );
+		const tableEl = $('table.datatables');
 
 		var datatable = tableEl.DataTable( {
-			ajax		: {
-				url			: cp_params.base_url + '/preferences/management/menus/list',
-				type		: 'GET',
-				data		: function(d) {
+			ajax: {
+				url: cp_params.base_url + '/preferences/setting/menus/list',
+				type: 'GET',
+				data: function(d) {
 					// ajax 요청항목 재정의
 					var data = {
-						limit			: d.length,
-						offset			: d.start,
-						keyword			: d.search.value,
-						orderby			: d.columns[d.order[0].column].data,
-						order			: d.order[0].dir
+						limit: d.length,
+						offset: d.start,
+						keyword: d.search.value,
+						orderby: d.columns[d.order[0].column].data,
+						order: d.order[0].dir
 					};
 
 					// 필터 항목 추가
-					$( ':input.search-filter-item' ).each( function() {
-						let key = $( this ).attr( 'name' ).replace( /^filter__/, '' );
-						let value = $( this ).val();
+					$(':input.search-filter-item').each(function() {
+						let key = $(this).attr('name').replace(/^filter__/, '');
+						let value = $(this).val();
 
-						if ( value == '' || ( $( this ).is( ':checkbox, :radio' ) && ! $( this ).is( ':checked' ) ) ) {
+						if (value == '' || ($(this).is(':checkbox, :radio') && ! $(this).is(':checked'))) {
 							return;
 						}
 
-						if ( $( this ).data( 'ionRangeSlider' ) ) {
-							let ionRangeSlider = $( this ).data( 'ionRangeSlider' );
+						if ($(this).data('ionRangeSlider')) {
+							let ionRangeSlider = $(this).data('ionRangeSlider');
 
-							if ( 'single' == ionRangeSlider.options.type ) {
-								if ( ionRangeSlider.result.from < ionRangeSlider.result.max ) {
-									data[ key ] = ionRangeSlider.result.from;
+							if ('single' == ionRangeSlider.options.type) {
+								if (ionRangeSlider.result.from < ionRangeSlider.result.max) {
+									data[key] = ionRangeSlider.result.from;
 								}
 							} else {
-								data[ key ] = {};
+								data[key] = {};
 
-								if ( ionRangeSlider.result.from > ionRangeSlider.result.min ) {
-									data[ key ]['min'] = ionRangeSlider.result.from;
+								if (ionRangeSlider.result.from > ionRangeSlider.result.min) {
+									data[key]['min'] = ionRangeSlider.result.from;
 								}
-								if ( ionRangeSlider.result.to < ionRangeSlider.result.max ) {
-									data[ key ]['max'] = ionRangeSlider.result.to;
+								if (ionRangeSlider.result.to < ionRangeSlider.result.max) {
+									data[key]['max'] = ionRangeSlider.result.to;
 								}
 							}
-						} else if( $.isArray( value ) ) {
-							data[ key ] = value.join();
+						} else if($.isArray(value)) {
+							data[key] = value.join();
 						} else {
-							data[ key ] = value;
+							data[key] = value;
 						}
 					} );
 
 					return data;
 				},
-				dataSrc        : function(response){
+				dataSrc: function(response){
 					response.recordsTotal = response.total_rows;
 					response.recordsFiltered = response.total_rows;
 					response.draw++;
@@ -451,29 +443,28 @@ var data = function() {
 			},
 			buttons : [
 				{
-					className	: 'btn btn-primary btn-add-new',
-					text		: '<i class="icon-upload7 font-size-base mr-1"></i>신규등록'
+					titleAttr: 'Create',
+					text: '<i class="ph-plus"></i>',
+					className: 'btn btn-primary btn-create'
 				},
 				{
-					className	: 'btn btn-danger btn-delete-selected',
-					text		: '<i class="icon-trash font-size-base mr-1"></i>선택삭제'
-				},
-				{
-					extend		: 'collection',
-					text		: '<i class="icon-three-bars"></i>',
-					className	: 'btn btn-teal btn-icon dropdown-toggle dropdown-icon-none',
-					buttons		: [
+					extend: 'collection',
+					text: '<i class="ph-list"></i>',
+					className: 'btn btn-light dropdown-toggle dropdown-icon-none',
+					buttons: [
 						{
-							extend		: 'copy',
-							text		: '<i class="icon-copy3 font-size-base mr-1"></i>선택항목 복사'
+							extend: 'copy',
+							className: 'dt-button dropdown-item',
+							text: '<i class="ph-copy-simple me-2"></i>Copy'
 						},
 						{
-							extend		: 'print',
-							text		: '<i class="icon-printer font-size-base mr-1"></i>선택항목 프린트'
+							extend: 'print',
+							className: 'dt-button dropdown-item',
+							text: '<i class="ph-copy-simple me-2"></i>Copy'
 						},
 						{
-							extend		: 'excel',
-							text		: '<i class="icon-file-download font-size-base mr-1"></i>선택항목 다운로드',
+							extend: 'excel',
+							text: '<i class="ph-download-simple me-2"></i>Download',
 							customize	: function (xlsx) {
 								var sheet = xlsx.xl.worksheets["sheet1.xml"];
 								$( "c[r^=I] t", sheet ).text( "" );
@@ -482,125 +473,137 @@ var data = function() {
 					]
 				},
 			],
-			order			: [ [ 2,'desc' ] ],
-			createdRow		: function( row, data, dataIndex ) {
-				$( row ).data( 'target-id', data.menu_id );
+			columnDefs: [
+				{
+					targets: 0,
+					orderable: false,
+					className: 'select-checkbox',
+					data: null,
+					defaultContent: ''
+				}
+			],
+			select: {
+				style: 'multi',
+				selector: 'td:first-child'
 			},
-			columns		: [
+			initComplete: function(settings, json) {
+				$('thead .select-checkbox').click(function() {
+					if ($('thead tr').hasClass('selected')) {
+						datatable.rows().deselect();
+						$('thead tr').removeClass('selected');
+					} else {
+						datatable.rows().select();
+						$('thead tr').addClass('selected');
+					}
+				});
+			},
+			order: [[2,'desc']],
+			createdRow: function(row, data, dataIndex) {
+				$(row).data('target-id', data.menu_id);
+			},
+			columns: [
+				{data: null},
 				{
-					data		: 'menu_id',
-					class		: 'select-checkbox',
-					sortable    : false,
-					render		: function( data, type, row, meta ) {
-						return null;
+					title: '<center>Menu name</center>',
+					data: 'name',
+					class: 'text-nowrap text-start',
+					render: function(data, type, row, meta) {
+						return '<a href="#" class="text-dark" data-bs-toggle="modal" data-bs-target="#modal-name">' + data + '</a>';
+					}
+
+				},
+				{
+					title: '<center>Menu ID</center>',
+					data: 'menu_id',
+					class: 'text-nowrap text-end'
+				},
+				{
+					title: '<center>Parent menu ID</center>',
+					data: 'parent_menu_id',
+					class: 'text-nowrap text-end',
+					render: function(data, type, row, meta) {
+						return '<a href="#" class="text-dark" data-bs-toggle="modal" data-bs-target="#modal-parent-menu">' + data + '</a>';
 					}
 				},
 				{
-					title		: '<center>메뉴명</center>',
-					data        : 'name',
-					class		: 'text-nowrap text-left',
-					render		: function( data, type, row, meta ) {
-						return '<a href="#" class="text-dark text-nowrap" data-toggle="modal" data-target="#modal-name">' + data + '</a>';
+					title: '<center>Priority</center>',
+					data: 'priority',
+					class: 'text-nowrap text-end',
+					sortable: false,
+					render: function(data, type, row, meta) {
+						return '<a href="#" class="text-dark" data-bs-toggle="modal" data-bs-target="#modal-priority">' + data + '</a>';
 					}
 				},
 				{
-					title		: '<center>일련번호</center>',
-					data        : 'menu_id',
-					class		: 'text-nowrap text-right',
-				},
-				{
-					title		: '<center>부모 일련번호</center>',
-					data        : 'parent_menu_id',
-					class		: 'text-nowrap text-right',
-					render		: function( data, type, row, meta ) {
-						return '<a href="#" class="text-dark text-nowrap" data-toggle="modal" data-target="#modal-parent-menu">' + data + '</a>';
+					title: '<center>Link</center>',
+					data: 'link',
+					class: 'text-nowrap text-start',
+					render: function(data, type, row, meta) {
+						return '<a href="#" class="text-dark" data-bs-toggle="modal" data-bs-target="#modal-link">' + data + '</a>';
 					}
 				},
 				{
-					title		: '<center>우선순위</center>',
-					data        : 'priority',
-					class		: 'text-nowrap text-right',
-					sortable    : false,
-					render		: function( data, type, row, meta ) {
-						return '<a href="#" class="text-dark text-nowrap" data-toggle="modal" data-target="#modal-priority">' + data + '</a>';
-					}
-				},
-				{
-					title		: '<center>링크</center>',
-					data        : 'link',
-					class		: 'text-nowrap text-left',
-					render		: function( data, type, row, meta ) {
-						return '<a href="#" class="text-dark text-nowrap" data-toggle="modal" data-target="#modal-link">' + data + '</a>';
-					}
-				},
-				{
-					title		: '<center>상태</center>',
-					data        : 'is_used',
-					class		: 'text-nowrap text-center',
-					sortable    : false,
-					render		: function( data, type, row, meta ) {
-						if ( row.is_used === 'Y' ) {
-							var html = '<a href="#" class="badge badge-flat border-primary text-primary" data-toggle="modal" data-target="#modal-status">활성화</a>';
+					title: '<center>Status</center>',
+					data: 'is_used',
+					class: 'text-nowrap text-center',
+					sortable: false,
+					render: function(data, type, row, meta) {
+						let class_y = "badge badge-flat border-primary text-primary";
+						let class_n = "badge badge-flat text-muted";
+
+						var html = '<a href="#" class="';
+						if (data == 'Y') {
+							html += class_y + '" data-bs-toggle="modal" data-bs-target="#modal-status">Enabled</a>';
+						} else if (data == 'N') {
+							html += class_n + '" data-bs-toggle="modal" data-bs-target="#modal-status">Disabled</a>';
 						} else {
-							var html = '<a href="#" class="badge badge-flat text-muted" data-toggle="modal" data-target="#modal-status">비활성화</a>';
+							html += 'text-danger">Error</a>';
 						}
 
 						return html;
 					}
 				},
 				{
-					title		: '<center>등록일</center>',
-					data        : 'created_at',
-					class		: 'text-nowrap text-center',
-					render		: function( data, type, row, meta ) {
-						let momentDt = moment( data );
-						let html = momentDt.isSame( moment(), 'day' ) ? moment.duration( momentDt.diff() ).humanize() + ' ago' : momentDt.format( 'YYYY-MM-DD' );
+					title: '<center>Created at</center>',
+					data: 'created_at',
+					class: 'text-nowrap text-center',
+					render: function(data, type, row, meta) {
+						let momentDt = moment(data);
 
-						return html;
+						return momentDt.isSame(moment(), 'day')
+							? moment.duration(momentDt.diff()).humanize() + ' ago'
+							: momentDt.format('YYYY-MM-DD');
 					}
 				},
 				{
-					title		: '<center><i class="icon-menu-open2"></i></center>',
-					data        : 'user_id',
-					class		: 'text-nowrap text-center',
-					sortable    : false,
-					render		: function( data, type, row, meta ) {
-						let html = '<div class="list-icons">\n' +
-							'	<div class="dropdown">\n' +
-							'		<a href="#" class="list-icons-item dropdown-toggle" data-toggle="dropdown"><i class="icon-cog6"></i></a>\n' +
-							'		<div class="dropdown-menu dropdown-menu-right dropdown-menu-xs">\n' +
-							'			<div class="dropdown-header">옵션 선택</div>\n' +
-							'			<a href="#" class="dropdown-item" data-toggle="modal" data-target="#modal-item"><i class="icon-pencil7 text-primary"></i>데이터 수정</a>\n' +
-							'			<a href="#" class="dropdown-item btn-delete-item"><i class="icon-trash text-danger"></i>데이터 삭제</a>\n' +
+					title: '<center><i class="ph-list"></i></center>',
+					data: 'user_id',
+					class: 'text-nowrap text-center',
+					sortable: false,
+					render: function(data, type, row, meta) {
+						return '<div class="d-inline-flex">\n' +
+							'	<div class="dropdown position-static">\n' +
+							'		<a href="#" class="text-body" data-bs-toggle="dropdown"><i class="ph-gear"></i></a>\n' +
+							'			<div class="dropdown-menu dropdown-menu-end">\n' +
+							'			<div class="dropdown-header">Option</div>\n' +
+							'			<a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-item"><i class="ph-pencil me-2"></i>데이터 수정</a>\n' +
 							'		</div>\n' +
 							'	</div>\n' +
 							'</div>\n';
-
-						return html;
 					}
 				}
 			],
 		} );
 
-		$( ':input.search-filter-item' ).on( 'change', function() {
+		$(':input.search-filter-item').on('change', function() {
 			datatable.ajax.reload();
-		} );
+		});
 
-		$( '.btn-add-new' ).attr( 'data-toggle', 'modal' ).attr( 'data-target', '#modal-add' );
-
-		$( 'thead .select-checkbox' ).on( 'click', function(e) {
-			if ( $( 'thead tr' ).hasClass( 'selected') ) {
-				$( 'thead tr' ).removeClass( 'selected' );
-				$( 'tbody tr' ).removeClass( 'selected' );
-				datatable.rows().deselect();
-			} else {
-				$( 'thead tr' ).addClass( 'selected' );
-				$( 'tbody tr' ).addClass( 'selected' );
-				datatable.rows().select();
-			}
-		} );
-
-	}
+		$('.btn-create')
+			.attr('data-tooltip', 'tooltip')
+			.attr('data-bs-toggle', 'modal')
+			.attr('data-bs-target', '$modal-create');
+	};
 
 	var _componentAddNew = function() {
 		const modalEl = $( '#modal-add' );
@@ -923,67 +926,6 @@ var data = function() {
 		} );
 	}
 
-	var _componentDeleteItem = function() {
-		const modalEl = $( 'table.datatables' );
-
-		modalEl.on( 'click', '.btn-delete-item', function(e) {
-			let target_id = $( this ).closest( 'tr' ).data( 'target-id' );
-
-			if ( confirm( '삭제를 하면 복구가 불가능합니다.\n삭제를 진행하시겠습니까?' ) == true ) {
-				$.ajax( {
-					url         : cp_params.base_url + '/preferences/management/menus/item_delete/' + target_id,
-					dataType    : 'json',
-					error       : function( xhr, status, error ) {
-						alert( xhr.responseText );
-					},
-					success     : function( data ) {
-						$( '#table' ).DataTable().ajax.reload( null, false );
-						alert( '삭제가 완료되었습니다.' );
-					}
-				} );
-				return false;
-			} else {
-				return false;
-			}
-		} );
-	}
-
-	var _componentDeleteSelected = function() {
-		const modalEl = $( '.data-table' );
-
-		modalEl.on( 'click', '.btn-delete-selected', function(e) {
-			var i = 0;
-			var target_ids = [];
-			$( 'tr.selected' ).each( function() {
-				target_ids += '&' + i + '=' + $( this ).data( 'targetId' );
-				i++;
-			} );
-
-			if ( target_ids.length > 0 ) {
-				if ( confirm( '삭제를 하면 복구가 불가능합니다.\n선택된 아이템을 삭제하시겠습니까?' ) == true ) {
-					$.ajax( {
-						type        : 'POST',
-						url         : cp_params.base_url + '/preferences/management/menus/selected_delete/',
-						data		: target_ids,
-						dataType    : 'json',
-						error       : function( xhr, status, error ) {
-							alert( xhr.responseText );
-						},
-						success     : function( data ) {
-							$( '#table' ).DataTable().ajax.reload( null, false );
-							alert( '삭제가 완료되었습니다.' );
-						}
-					} );
-					return false;
-				} else {
-					return false;
-				}
-			} else {
-				alert( '선택값이 없습니다.' );
-			}
-		} );
-	}
-
 	return {
 		init: function() {
 			_componentDatatable();
@@ -994,8 +936,6 @@ var data = function() {
 			_componentLink();
 			_componentStatus();
 			_componentItem();
-			_componentDeleteItem();
-			_componentDeleteSelected();
 		}
 	}
 }();

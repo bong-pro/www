@@ -1,16 +1,20 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-function doc_generate_nav($nav_data=array(), $menu_id=false, $n=null)
+function doc_generate_nav($nav_data=array(), $menu_id=false, $n=null, $group_permission=array())
 {
 	$html = '';
-	foreach ( $nav_data AS $key => $item ) {
+	foreach ($nav_data AS $key => $item) {
 		$item_class = 'nav-item';
 		$link_class = 'nav-link';
 
 		if ( $menu_id == $item['menu_id'] ) $link_class .= ' active';
 
-		$link_class .= ' ' . $item['link_class'];
+		if (in_array(strtolower($item['link']), $group_permission) || $item['link'] == '#') {
+			$link_class .= ' ' . $item['link_class'];
+		} else {
+			$link_class .= ' disabled';
+		}
 
 		$target = '';
 		if ( !empty($item['link_target']) ) $target = 'target="' . html_escape($item['link_target']) . '"';
@@ -21,10 +25,10 @@ function doc_generate_nav($nav_data=array(), $menu_id=false, $n=null)
 			$n = $n ? (int) $n : (int) 4;
 			$show_class = substr($menu_id, 0, (int) $n) == $item['menu_id'] ? ' show' : '';
 			$n = substr($menu_id, 0, (int) $n) == $item['menu_id'] ? $n += 2 : $n;
-			
+				
 			$name_e = html_escape($item['name']);
 			$child_html .= "<ul class=\"nav-group-sub collapse{$show_class}\" data-submenu-title=\"{$name_e}\">";
-			$child_html .= doc_generate_nav($item['_children'], $menu_id, $n);
+			$child_html .= doc_generate_nav($item['_children'], $menu_id, $n, $group_permission);
 			$child_html .= "</ul>";
 
 			$item_class .= " nav-item-submenu";

@@ -9,7 +9,7 @@ class profile extends CP_Controller
 		$this->document->config( 'ID', 8010 );
 		$this->document->config( 'page_title', 'Profile' );
 
-		$this->document->view( 'admin/profile' );
+		$this->document->view( 'account/profile' );
 	}
 
 }

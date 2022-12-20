@@ -7,33 +7,33 @@ class Menus extends CP_Controller
 	public function index()
 	{
 		// load page
-		$this->document->config( 'ID', 10901010 );
-		$this->document->config( 'page_title', 'Menu List' );
-		$this->document->view( 'preferences/setting/menus' );
+		$this->document->config('ID', 901010);
+		$this->document->config('page_title', 'Menu List');
+		$this->document->view('preferences/setting/menus');
 	}
 
 	public function list()
 	{
 		$params = array(
-			'menu_id'	=> $this->input->get( 'menu_id' ),
+			'menu_id'	=> $this->input->get('menu_id'),
 
-			'keyword'	=> $this->input->get( 'keyword' ),
-			'is_used'	=> $this->input->get( 'is_used' ),
-			'start'		=> $this->input->get( 'start' ),
-			'end'		=> $this->input->get( 'end' ),
+			'keyword'	=> $this->input->get('keyword'),
+			'is_used'	=> $this->input->get('is_used'),
+			'start'		=> $this->input->get('start'),
+			'end'		=> $this->input->get('end'),
 
-			'limit'		=> $this->input->get( 'limit' ),
-			'offset'	=> $this->input->get( 'offset' ),
-			'orderby'	=> $this->input->get( 'orderby' ),
-			'order'		=> $this->input->get( 'order' ),
+			'limit'		=> $this->input->get('limit'),
+			'offset'	=> $this->input->get('offset'),
+			'orderby'	=> $this->input->get('orderby'),
+			'order'		=> $this->input->get('order'),
 		);
 
 		$args = array_filter( $params, function($v) {
 			return ( isset( $v ) && !is_null( $v ) );
 		} );
 
-		$this->load->model( 'MenusModel' );
-		$data = $this->MenusModel->menu_list( $args );
+		$this->load->model('Model_menus');
+		$data = $this->Model_menus->menu_list( $args );
 
 		cp_api_json( $data );
 	}
@@ -44,30 +44,10 @@ class Menus extends CP_Controller
 			return false;
 		}
 
-		$this->load->model( 'Model_menu' );
-		$data = $this->Model_menu->_item( null, array(
+		$this->load->model( 'Model_menus' );
+		$data = $this->Model_menus->_item( null, array(
 			'menu_id' => $target_id,
 		) );
-
-		cp_api_json( $data );
-	}
-
-	public function item_delete( $target_id='' )
-	{
-		if ( ! empty( $target_id ) ) {
-			$this->load->model( 'Model_menu' );
-			$data = $this->Model_menu->_delete( $target_id, null );
-		}
-
-		cp_api_json( $data );
-	}
-
-	public function selected_delete()
-	{
-		if ( ! empty( $this->input->post() ) ) {
-			$this->load->model( 'MenusModel' );
-			$data = $this->MenusModel->_selected_delete( $this->input->post() );
-		}
 
 		cp_api_json( $data );
 	}

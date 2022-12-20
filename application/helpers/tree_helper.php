@@ -19,11 +19,11 @@ function doc_generate_tree_json($tree_data=array(), $url_data=array(), $selected
 			if (!empty($url_data)) array_pop($url_data);
 		} else if ($item !== 'Dashboard.php' && $item !== 'Auth.php' && $item !== 'index.html') {
 			$title_name = str_replace('.php', '', $item);
-			$url = '/' . implode('', $url_data) . $title_name;
+			$url = '/' . implode('', $url_data) . strtolower($title_name);
 
 			$selected = '';
 			if (!empty($selected_data)) {
-				$permission = explode(',', str_replace('"', '', $selected_data));
+				$permission = explode(',', str_replace('"', '', strtolower($selected_data)));
 				$selected = in_array($url, $permission) ? ", selected:true" : ", selected:false";
 			}
 

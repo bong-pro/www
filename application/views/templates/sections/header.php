@@ -45,9 +45,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				</a>
 				
 				<div class="dropdown-menu dropdown-menu-end">
-					<a href="<?php echo base_url('/admin/profile'); ?>" class="dropdown-item"><i class="ph-user-circle me-2"></i>My profile</a>
+					<a href="<?php echo base_url('/account/profile'); ?>" class="dropdown-item"><i class="ph-user-circle me-2"></i>My profile</a>
 					<div class="dropdown-divider"></div>
-				<a href="#" class="dropdown-item"><i class="ph-gear me-2"></i>Account settings</a>
+				<a href="<?php echo base_url('/account/setting'); ?>" class="dropdown-item"><i class="ph-gear me-2"></i>Account setting</a>
 				<a href="<?php echo base_url('/auth/logout'); ?>" class="dropdown-item"><i class="ph-sign-out me-2"></i>Logout</a>
 				</div>
 			</li>
