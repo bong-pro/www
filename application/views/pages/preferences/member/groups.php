@@ -351,7 +351,8 @@ var data = function() {
 							'		<div class="dropdown-menu dropdown-menu-end">\n' +
 							'			<div class="dropdown-header">Option</div>\n' +
 							'			<a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-item"><i class="ph-pencil me-2"></i>Edit</a>\n' +
-							'			<a href="#" class="dropdown-item btn-delete-item"><i class="ph-trash me-2"></i>Delete</a>\n' +
+							'			<div class="dropdown-divider"></div>\n' +
+							'			<a href="#" class="dropdown-item btn-delete-item"><i class="ph-trash me-2"></i>Move to trach</a>\n' +
 							'		</div>\n' +
 							'	</div>\n' +
 							'</div>\n';

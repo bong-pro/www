@@ -16,7 +16,7 @@ class Menus extends CP_Controller
 	{
 		// load page
 		$this->document->config('ID', 901010);
-		$this->document->config('page_title', 'Menu List');
+		$this->document->config('page_title', 'Menu list');
 		$this->document->view('preferences/setting/menus');
 	}
 

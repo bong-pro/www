@@ -21,6 +21,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 .content hr {width: 934px; background-color: #ccc; border: 0; height: 1px;}
 </style>
 
-<div class="card">
-	<div class="card-body"><?php echo $phpinfo_html; ?></div>
+<!-- PHP info -->
+<div class="card px-2">
+	<?php echo $phpinfo_html; ?>
 </div>
+<!-- /PHP info -->
