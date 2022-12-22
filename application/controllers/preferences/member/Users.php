@@ -53,7 +53,7 @@ class Users extends CP_Controller
 		}
 
 		$data = $this->Model_users->_item(null, array(
-			'user_id' => $target_id,
+			'user_id' => $target_id
 		));
 
 		cp_api_json($data);
@@ -93,7 +93,7 @@ class Users extends CP_Controller
 	public function password_put($target_id='')
 	{
 		if (empty($this->input->post('password'))) {
-			echo 'No value';
+			echo 'Password field is required.';
 			return false;
 		}
 
@@ -131,11 +131,11 @@ class Users extends CP_Controller
 				return null !== $v;
 			});
 
+			$update['group_id'] = !empty($this->input->post('group_id')) ? $this->input->post('group_id') : null;
+
 			if (empty($update)) {
 				throw new Exception('There is on data to register');
 			}
-
-			$update['group_id'] = !empty($this->input->post('group_id')) ? $this->input->post('group_id') : null;
 
 			$data['result'] = $this->Model_users->_update(null, $update, array(
 				'user_id' => $target_id,

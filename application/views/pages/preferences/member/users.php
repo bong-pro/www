@@ -36,39 +36,39 @@ $this->document->add_js('validate', base_url('template/assets/js/vendor/forms/va
 			<form class="form-horizontal form-validate-jquery">
 				<div class="modal-body">
 					<div class="row mb-3">
-						<label class="col-form-label col-sm-3">User login ID</label>
+						<label class="col-form-label col-sm-3">User login ID<span class="text-danger">*</span></label>
 						<div class="col-sm-9">
 							<input type="text" class="form-control" name="login" id="login" placeholder="Login ID" required />
 						</div>
 					</div>
 
 					<div class="row mb-3">
-						<label class="col-form-label col-sm-3">Password</label>
+						<label class="col-form-label col-sm-3">Password<span class="text-danger">*</span></label>
 						<div class="col-sm-9">
 							<input type="password" class="form-control" name="password" placeholder="•••••••••••" required />
-							<small class="text-muted ms-1">The password must be at least 4 characters long</small>
+							<div class="form-text">The password must be at least 4 characters long</div>
 						</div>
 					</div>
 
 					<div class="row mb-3">
-						<label class="col-form-label col-sm-3">User name</label>
+						<label class="col-form-label col-sm-3">User name<span class="text-danger">*</span></label>
 						<div class="col-sm-9">
 							<input type="text" class="form-control" name="name" placeholder="User name" required />
 						</div>
 					</div>
 
 					<div class="row mb-3">
-						<label class="col-form-label col-sm-3">User email</label>
+						<label class="col-form-label col-sm-3">User email<span class="text-danger">*</span></label>
 						<div class="col-sm-9">
 							<input type="text" class="form-control" name="email" placeholder="User email" required />
 						</div>
 					</div>
 
 					<div class="row mb-3">
-						<label class="col-form-label col-sm-3">User mobile</label>
+						<label class="col-form-label col-sm-3">User mobile<span class="text-danger">*</span></label>
 						<div class="col-sm-9">
 							<input type="text" class="form-control" name="mobile" placeholder="Mobile number" required />
-							<small class="text-muted ms-1">Please enter only numbers</small>
+							<div class="form-text">Please enter only numbers</div>
 						</div>
 					</div>
 
@@ -151,31 +151,31 @@ $this->document->add_js('validate', base_url('template/assets/js/vendor/forms/va
 					</div>
 
 					<div class="row mb-3">
-						<label class="col-form-label col-sm-3">User login ID</label>
+						<label class="col-form-label col-sm-3">User login ID<span class="text-danger">*</span></label>
 						<div class="col-sm-9">
 							<input type="text" class="form-control" name="login" placeholder="Login ID" disabled />
 						</div>
 					</div>
 
 					<div class="row mb-3">
-						<label class="col-form-label col-sm-3">User name</label>
+						<label class="col-form-label col-sm-3">User name<span class="text-danger">*</span></label>
 						<div class="col-sm-9">
 							<input type="text" class="form-control" name="name" placeholder="User name" required />
 						</div>
 					</div>
 
 					<div class="row mb-3">
-						<label class="col-form-label col-sm-3">User email</label>
+						<label class="col-form-label col-sm-3">User email<span class="text-danger">*</span></label>
 						<div class="col-sm-9">
 							<input type="text" class="form-control" name="email" placeholder="User email" required />
 						</div>
 					</div>
 
 					<div class="row mb-3">
-						<label class="col-form-label col-sm-3">User mobile</label>
+						<label class="col-form-label col-sm-3">User mobile<span class="text-danger">*</span></label>
 						<div class="col-sm-9">
 							<input type="text" class="form-control" name="mobile" placeholder="Mobile number" required />
-							<small class="text-muted ms-1">Please enter only numbers</small>
+							<div class="form-text">Please enter only numbers</div>
 						</div>
 					</div>
 
@@ -203,7 +203,7 @@ $this->document->add_js('validate', base_url('template/assets/js/vendor/forms/va
 </div>
 <!-- /modal modified item -->
 
-<!-- modal Password -->
+<!-- Modal Password -->
 <div id="modal-password" class="modal fade" data-backdrop="static" tabindex="-1" role="dialog">
 	<div class="modal-dialog modal-dialog-centered modal-sm" role="document">
 		<div class="modal-content">
@@ -218,7 +218,7 @@ $this->document->add_js('validate', base_url('template/assets/js/vendor/forms/va
 						<div class="col-sm-12">
 							<input type="hidden" name="user_id" />
 							<input type="password" class="form-control" name="password" placeholder="•••••••••••" required />
-							<small class="text-muted ml-1">The password must be at least 4 characters long</small>
+							<div class="form-text">The password must be at least 4 characters long</div>
 						</div>
 					</div>
 				</div>

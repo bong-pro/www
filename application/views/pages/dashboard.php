@@ -4,22 +4,26 @@ defined('BASEPATH') or exit('No direct script access allowed');
 $this->document->add_js('gauge_basic', base_url('template/assets/js/vendor/visualization/echarts/echarts.min.js'));
 ?>
 
+<!-- Dashboard -->
 <div class="row">
 	<div class="col-xl-6">
 		<div class="card">
+			<div class="card-header d-flex align-items-center">
+				<h5 class="mb-0">Server time</h5>
+			</div>
 			<div class="card-body">
-				<h1 class="mb-0 h1-clock" id="clock"><?php echo date("Y-m-d H:i:s", time()); ?></h1>
+				<div class="mb-1">
+					<h1 class="" id="clock"><?php echo date("Y-m-d H:i:s", time()); ?></h1>
+				</div>
 			</div>
 		</div>
 
 		<div class="card">
 			<div class="card-body">
-				<h1>Welcome!</h1>
+				<h5>Welcome!</h5>
 				<p>The page you are looking at is being generated dynamically by System.</p>
-
 				<p>If you would like to edit this page you'll find it located at:</p>
 				<code>application/views/page/dashboard.php</code>
-
 				<p>The corresponding controller for this page is found at:</p>
 				<code>application/controllers/Dashboard.php</code>
 				<div id='ci_info'>
@@ -31,54 +35,61 @@ $this->document->add_js('gauge_basic', base_url('template/assets/js/vendor/visua
 
 	<div class="col-xl-6">
 		<div class="card">
+			<div class="card-header d-flex align-items-center">
+				<h5 class="mb-0">Server info</h5>
+			</div>
+
 			<div class="card-body">
-				<div class="form-group row">
-					<label class="col-form-label col-lg-4">Server Name</label>
-					<div class="col-lg-8">
-						<span class="form-control"><?php echo $_SERVER['SERVER_NAME']; ?></span>
+				<div class="mb-4">
+					<div class="row mb-3">
+						<label class="col-form-label col-lg-4">Server Name</label>
+						<div class="col-lg-8">
+							<input type="text" class="form-control-plaintext border-bottom p-1" value="<?php echo $_SERVER['SERVER_NAME']; ?>" disabled />
+						</div>
 					</div>
-				</div>
 
-				<div class="form-group row">
-					<label class="col-form-label col-lg-4">Server Addr</label>
-					<div class="col-lg-8">
-						<span class="form-control"><?php echo $_SERVER['SERVER_ADDR']; ?></span>
+					<div class="row mb-3">
+						<label class="col-form-label col-lg-4">Server Addr</label>
+						<div class="col-lg-8">
+							<input type="text" class="form-control-plaintext border-bottom p-1" value="<?php echo $_SERVER['SERVER_ADDR']; ?>" disabled />
+						</div>
 					</div>
-				</div>
 
-				<div class="form-group row">
-					<label class="col-form-label col-lg-4">PHP Version</label>
-					<div class="col-lg-8">
-						<span class="form-control"><?php echo phpversion(); ?></span>
+					<div class="row mb-3">
+						<label class="col-form-label col-lg-4">PHP Version</label>
+						<div class="col-lg-8">
+							<input type="text" class="form-control-plaintext border-bottom p-1" value="<?php echo phpversion(); ?>" disabled />
+						</div>
 					</div>
-				</div>
 
-				<legend class="text-uppercase font-size-sm font-weight-bold"></legend>
+					<div class="fw-bold border-bottom pb-2 mb-3"></div>
 
-				<div class="form-group row">
-					<label class="col-form-label col-lg-4">CPU Usage percent</label>
-					<div class="col-lg-8">
-						<span class="form-control" id="cpu_usage_percent"><?php echo $cpu_usage_percent; ?></span>
+					<div class="row mb-3">
+						<label class="col-form-label col-lg-4">CPU Usage percent</label>
+						<div class="col-lg-8">
+							<input type="text" class="form-control-plaintext border-bottom p-1" id="cpu_usage_percent" value="<?php echo $cpu_usage_percent; ?>" disabled />
+						</div>
 					</div>
-				</div>
 
-				<div class="form-group row">
-					<label class="col-form-label col-lg-4">MEM Usage percent</label>
-					<div class="col-lg-8">
-						<span class="form-control" id="memory_usage_percent"><?php echo $memory_usage_percent; ?></span>
+					<div class="row mb-3">
+						<label class="col-form-label col-lg-4">MEM Usage percent</label>
+						<div class="col-lg-8">
+							<input type="text" class="form-control-plaintext border-bottom p-1" id="memory_usage_percent" value="<?php echo $memory_usage_percent; ?>" disabled />
+						</div>
 					</div>
-				</div>
 
-				<div class="form-group row">
-					<label class="col-form-label col-lg-4">DISK Usage percent</label>
-					<div class="col-lg-8">
-						<span class="form-control" id="disk_usage_percent"><?php echo $disk_usage_percent; ?></span>
+					<div class="row mb-3">
+						<label class="col-form-label col-lg-4">DISK Usage percent</label>
+						<div class="col-lg-8">
+							<input type="text" class="form-control-plaintext border-bottom p-1" id="disk_usage_percent" value="<?php echo $disk_usage_percent; ?>" disabled />
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+<!-- /dashboard -->
 
 <script type="text/javascript">
 var data = function() {
@@ -101,10 +112,6 @@ var data = function() {
 	};
 
 	var _componentSystemInfo = function() {
-		const cpu_usage_percent		= document.getElementById('cpu_usage_percent');
-		const memory_usage_percent	= document.getElementById('memory_usage_percent');
-		const disk_usage_percent	= document.getElementById('disk_usage_percent');
-
 		function getSystemInfo() {
 			$.ajax({
 				url: cp_params.base_url + '/dashboard/get_server_info/',
@@ -112,9 +119,9 @@ var data = function() {
 					console.log(xhr.responseText);
 				},
 				success: function(data) {
-					cpu_usage_percent.innerHTML = data.cpu_usage_percent;
-					memory_usage_percent.innerHTML = data.memory_usage_percent;
-					disk_usage_percent.innerHTML = data.disk_usage_percent;
+					$('#cpu_usage_percent').val(data.cpu_usage_percent);
+					$('#memory_usage_percent').val(data.memory_usage_percent);
+					$('#disk_usage_percent').val(data.disk_usage_percent);
 				}
 			});
 		}

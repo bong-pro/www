@@ -81,4 +81,19 @@ class Model_users extends CP_Model
 		);
 	}
 
+	public function item_user_group($primary_value='', $where=array(), $select='*')
+	{
+		if ($primary_value) $this->db->where($this->primary_key, $primary_value);
+		if ($where) $this->db->where($where);
+
+		$this->db->select("{$this->_table}.*, groups.permission AS group_permission, groups.name AS group_name");
+		$this->db->join('groups', "groups.group_id = {$this->_table}.group_id", 'left');
+		$this->db->from($this->_table);
+		$this->db->limit(1);
+
+		$query = $this->db->get();
+
+		return $query->row_array();
+	}
+
 }

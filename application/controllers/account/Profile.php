@@ -12,4 +12,18 @@ class profile extends CP_Controller
 		$this->document->view( 'account/profile' );
 	}
 
+	public function item_get($target_id='')
+	{
+		if (empty($target_id)) {
+			return false;
+		}
+
+		$this->load->model('Model_users');
+		$data = $this->Model_users->item_user_group(null, array(
+			'user_id' => $target_id
+		));
+
+		cp_api_json($data);
+	}
+
 }

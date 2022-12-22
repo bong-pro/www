@@ -59,7 +59,7 @@ class Groups extends CP_Controller
 		}
 
 		$data = $this->Model_groups->_item(null, array(
-			'group_id' => $target_id,
+			'group_id' => $target_id
 		));
 
 		$select = !empty($data['permission']) ? $data['permission'] : null;

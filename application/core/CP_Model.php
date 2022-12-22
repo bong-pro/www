@@ -188,13 +188,7 @@ class CP_Model extends CI_Model
 		if ($primary_value) $this->db->where($this->primary_key, $primary_value);
 		if ($where) $this->db->where($where);
 
-		if ($this->_table == 'users') {
-			$this->db->select('*, groups.permission AS group_permission');
-			$this->db->join('groups', "groups.group_id = {$this->_table}.group_id", 'left');
-		} else {
-			$this->db->select($select);
-		}
-
+		$this->db->select($select);
 		$this->db->from($this->_table);
 		$this->db->limit(1);
 

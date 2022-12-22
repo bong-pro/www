@@ -48,7 +48,7 @@ $this->document->add_js('fancytree_all', base_url('template/assets/js/vendor/tre
 					</div>
 
 					<div class="row mb-3">
-						<label class="col-form-label col-sm-3">Group name</label>
+						<label class="col-form-label col-sm-3">Group name<span class="text-danger">*</span></label>
 						<div class="col-sm-9">
 							<input type="text" name="name" class="form-control" placeholder="Group name" required />
 						</div>
@@ -129,7 +129,7 @@ $this->document->add_js('fancytree_all', base_url('template/assets/js/vendor/tre
 					</div>
 
 					<div class="row mb-3">
-						<label class="col-form-label col-sm-3">Group name</label>
+						<label class="col-form-label col-sm-3">Group name<span class="text-danger">*</span></label>
 						<div class="col-sm-9">
 							<input type="text" name="name" class="form-control" placeholder="Group name" required />
 						</div>

@@ -18,10 +18,10 @@ class User
 	protected function _get_data()
 	{
 		$data = false;
-		if ( $this->is_logged_in() ) {
-			$data = $this->_CI->Model_users->_item($this->get_user_id());
+		if ($this->is_logged_in()) {
+			$data = $this->_CI->Model_users->item_user_group($this->get_user_id());
 			$metas = $this->_get_meta_data(element('user_id', $data));
-			if ( is_array($metas) ) $data = array_merge($data, $metas);
+			if (is_array($metas)) $data = array_merge($data, $metas);
 		}
 		$this->data = $data;
 
@@ -40,7 +40,7 @@ class User
 
 	public function get_user_id()
 	{
-		if ( $this->_CI->session->userdata('user_id') ) return $this->_CI->session->userdata('user_id');
+		if ($this->_CI->session->userdata('user_id')) return $this->_CI->session->userdata('user_id');
 		return false;
 	}
 
@@ -56,7 +56,7 @@ class User
 		$args = cp_parse_args($args, $defaults);
 
 		$avatar_image = $this->item('image');
-		if ( $avatar_image === false ) $avatar_image = $args['default'];
+		if ($avatar_image === false) $avatar_image = $args['default'];
 
 		return sprintf(
 			'<img src="%s" class="%s" width="%s" border="0" alt="%s" />',
@@ -69,8 +69,8 @@ class User
 
 	public function item($key='', $default=false)
 	{
-		if ( empty($this->data) ) $this->_get_data();
-		if ( empty($key) || empty($this->data) ) return $default;
+		if (empty($this->data) ) $this->_get_data();
+		if (empty($key) || empty($this->data)) return $default;
 
 		return isset($this->data[$key]) ? $this->data[$key] : $default;
 	}

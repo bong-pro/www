@@ -22,353 +22,229 @@ $this->document->add_js('buttons', base_url('template/assets/js/vendor/tables/da
 </div>
 <!-- /tabel list -->
 
-<!-- modal add -->
-<div id="modal-add" class="modal fade" data-backdrop="static" tabindex="-1" role="dialog">
+<!-- Modal create -->
+<div id="modal-create" class="modal fade" data-backdrop="static" tabindex="-1" role="dialog">
 	<div class="modal-dialog modal-dialog-centered" role="document">
-		<form class="modal-content">
-			<div class="modal-header py-2">
-				<h5 class="modal-title"><i class="icon-upload7 mr-1"></i>신규 등록</h5>
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title"><i class="ph-user me-1"></i>Create</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
 			</div>
 
-			<div class="modal-body">
-				<legend class="text-uppercase font-size-sm font-weight-bold">등록정보</legend>
+			<form class="form-horizontal">
+				<div class="modal-body">
+					<div class="row mb-3">
+						<label class="col-form-label col-sm-3">Status</label>
+						<div class="col-sm-9">
+							<select name="is_used" class="form-control select">
+								<option value="Y">Enabled</option>
+								<option value="N">Disabled</option>
+							</select>
+						</div>
+					</div>
 
-				<div class="form-group row">
-					<label class="col-form-label col-lg-3">상태</label>
-					<div class="col-lg-9">
-						<select name="is_used" class="form-control select">
-							<option value="Y">활성화</option>
-							<option value="N">비활성화</option>
-						</select>
+					<div class="row mb-3">
+						<label class="col-form-label col-sm-3">Menu name<span class="text-danger">*</span></label>
+						<div class="col-sm-9">
+							<input type="text" name="name" class="form-control" placeholder="Menu name" required />
+						</div>
+					</div>
+
+					<div class="row mb-3">
+						<label class="col-form-label col-sm-3">Menu ID<span class="text-danger">*</span></label>
+						<div class="col-sm-9">
+							<input type="text" name="menu_id" class="form-control" placeholder="Menu ID" required />
+						</div>
+					</div>
+
+					<div class="row mb-3">
+						<label class="col-form-label col-sm-3">Parent menu ID<span class="text-danger">*</span></label>
+						<div class="col-sm-9">
+							<input type="text" name="parent_menu_id" class="form-control" placeholder="Parent menu ID" required />
+						</div>
+					</div>
+
+					<div class="row mb-3">
+						<label class="col-form-label col-sm-3">Priority<span class="text-danger">*</span></label>
+						<div class="col-sm-9">
+							<input type="text" name="priority" class="form-control" placeholder="Priority" required />
+						</div>
+					</div>
+
+					<div class="row mb-3">
+						<label class="col-form-label col-sm-3">Priority<span class="text-danger">*</span></label>
+						<div class="col-sm-9">
+							<input type="text" name="link" class="form-control" placeholder="/aaa/bbb/ccc" required />
+							<div class="form-text">ex) [Base URL]/aaa/bbb/ccc</div>
+						</div>
+					</div>
+
+					<div class="row mb-3">
+						<label class="col-form-label col-sm-3">Link target</label>
+						<div class="col-sm-9">
+							<input type="text" name="link_target" class="form-control" placeholder="Link target" />
+							<div class="form-text">ex) _blank, _self, _parent, _top</div>
+						</div>
+					</div>
+
+					<div class="row mb-3">
+						<label class="col-form-label col-sm-3">Link class</label>
+						<div class="col-sm-9">
+							<input type="text" name="link_class" class="form-control" placeholder="Link class" />
+						</div>
+					</div>
+
+					<div class="row mb-3">
+						<label class="col-form-label col-sm-3">Before html</label>
+						<div class="col-sm-9">
+							<input type="text" name="before_html" class="form-control" placeholder="HTML" />
+						</div>
+					</div>
+
+					<div class="row mb-3">
+						<label class="col-form-label col-sm-3">Before html</label>
+						<div class="col-sm-9">
+							<input type="text" name="after_html" class="form-control" placeholder="HTML code" />
+						</div>
 					</div>
 				</div>
 
-				<div class="form-group row">
-					<label class="col-form-label col-lg-3">메뉴명<span class="text-danger ml-1">*</span></label>
-					<div class="col-lg-9">
-						<input type="text" name="name" class="form-control" placeholder="메뉴명&hellip;" required />
-					</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-link" data-bs-dismiss="modal"><i class="ph-x me-1"></i>Close</button>
+					<button type="submit" class="btn btn-primary"><i class="ph-check me-1"></i>Save</button>
 				</div>
-
-				<div class="form-group row">
-					<label class="col-form-label col-lg-3">일련번호<span class="text-danger ml-1">*</span></label>
-					<div class="col-lg-9">
-						<input type="text" name="menu_id" class="form-control" placeholder="메뉴 아이디&hellip;" required />
-					</div>
-				</div>
-
-				<div class="form-group row">
-					<label class="col-form-label col-lg-3">부모 일련번호<span class="text-danger ml-1">*</span></label>
-					<div class="col-lg-9">
-						<input type="text" name="parent_menu_id" class="form-control" placeholder="부모 일련번호&hellip;" required />
-					</div>
-				</div>
-
-				<div class="form-group row">
-					<label class="col-form-label col-lg-3">우선순위</label>
-					<div class="col-lg-9">
-						<input type="text" name="priority" class="form-control" placeholder="우선순위&hellip;" required />
-					</div>
-				</div>
-
-				<div class="form-group row">
-					<label class="col-form-label col-lg-3">링크</label>
-					<div class="col-lg-9">
-						<input type="text" name="link" class="form-control" placeholder="링크&hellip;" required />
-						<small class="form-text text-muted">Base URL 이후부터 작성( /aaa/bbb/ccc )</small>
-					</div>
-				</div>
-
-				<div class="form-group row">
-					<label class="col-form-label col-lg-3">링크 target</label>
-					<div class="col-lg-9">
-						<input type="text" name="link_target" class="form-control" placeholder="링크 target&hellip;" />
-					</div>
-				</div>
-
-				<div class="form-group row">
-					<label class="col-form-label col-lg-3">링크 class</label>
-					<div class="col-lg-9">
-						<input type="text" name="link_class" class="form-control" placeholder="링크 class&hellip;" />
-					</div>
-				</div>
-
-				<div class="form-group row">
-					<label class="col-form-label col-lg-3">메뉴 앞 HTML</label>
-					<div class="col-lg-9">
-						<input type="text" name="before_html" class="form-control" placeholder="HTML 입력&hellip;" />
-					</div>
-				</div>
-
-				<div class="form-group row">
-					<label class="col-form-label col-lg-3">메뉴 뒤 HTML</label>
-					<div class="col-lg-9">
-						<input type="text" name="after_html" class="form-control" placeholder="HTML 입력&hellip;" />
-					</div>
-				</div>
-
-			</div>
-
-			<div class="modal-footer">
-				<button type="button" class="btn btn-link" data-dismiss="modal"><i class="icon-cross2 font-size-base mr-1"></i>닫기</button>
-				<button type="submit" class="btn btn-primary"><i class="icon-checkmark3 font-size-base mr-1"></i>저장</button>
-			</div>
-		</form>
+			</form>
+		</div>
 	</div>
 </div>
-<!-- /modal add -->
+<!-- /modal create -->
 
-<!-- modal name -->
-<div id="modal-name" class="modal fade" data-backdrop="static" tabindex="-1" role="dialog">
-	<div class="modal-dialog modal-sm modal-dialog-centered" role="document">
-		<form class="modal-content">
-			<div class="modal-header py-2">
-				<h5 class="modal-title"><i class="icon-pencil7 mr-1"></i>메뉴명 수정</h5>
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-			</div>
-
-			<div class="modal-body">
-
-				<input type="hidden" name="menu_id" />
-
-				<div class="form-group row">
-					<label class="col-form-label col-lg-2">메뉴명</label>
-					<div class="col-lg-10">
-						<input type="text" name="name" class="form-control" placeholder="메뉴명&hellip;" required />
-					</div>
-				</div>
-			</div>
-
-			<div class="modal-footer">
-				<button type="button" class="btn btn-link" data-dismiss="modal"><i class="icon-cross2 font-size-base mr-1"></i>닫기</button>
-				<button type="submit" class="btn btn-primary"><i class="icon-checkmark3 font-size-base mr-1"></i>저장</button>
-			</div>
-		</form>
-	</div>
-</div>
-<!-- /modal name -->
-
-<!-- modal parent_menu_id -->
-<div id="modal-parent-menu" class="modal fade" data-backdrop="static" tabindex="-1" role="dialog">
-	<div class="modal-dialog modal-sm modal-dialog-centered" role="document">
-		<form class="modal-content">
-			<div class="modal-header py-2">
-				<h5 class="modal-title"><i class="icon-pencil7 mr-1"></i>부모 일련번호 수정</h5>
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-			</div>
-
-			<div class="modal-body">
-
-				<input type="hidden" name="menu_id" />
-
-				<div class="form-group row">
-					<label class="col-form-label col-lg-4">부모 일련번호</label>
-					<div class="col-lg-8">
-						<input type="text" name="parent_menu_id" class="form-control" placeholder="부모 일련번호&hellip;" required />
-					</div>
-				</div>
-			</div>
-
-			<div class="modal-footer">
-				<button type="button" class="btn btn-link" data-dismiss="modal"><i class="icon-cross2 font-size-base mr-1"></i>닫기</button>
-				<button type="submit" class="btn btn-primary"><i class="icon-checkmark3 font-size-base mr-1"></i>저장</button>
-			</div>
-		</form>
-	</div>
-</div>
-<!-- /modal parent_menu_id -->
-
-<!-- modal priority -->
-<div id="modal-priority" class="modal fade" data-backdrop="static" tabindex="-1" role="dialog">
-	<div class="modal-dialog modal-sm modal-dialog-centered" role="document">
-		<form class="modal-content">
-			<div class="modal-header py-2">
-				<h5 class="modal-title"><i class="icon-pencil7 mr-1"></i>우선순위 수정</h5>
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-			</div>
-
-			<div class="modal-body">
-
-				<input type="hidden" name="menu_id" />
-
-				<div class="form-group row">
-					<label class="col-form-label col-lg-3">우선순위</label>
-					<div class="col-lg-9">
-						<input type="text" name="priority" class="form-control" placeholder="우선순위&hellip;" required />
-					</div>
-				</div>
-			</div>
-
-			<div class="modal-footer">
-				<button type="button" class="btn btn-link" data-dismiss="modal"><i class="icon-cross2 font-size-base mr-1"></i>닫기</button>
-				<button type="submit" class="btn btn-primary"><i class="icon-checkmark3 font-size-base mr-1"></i>저장</button>
-			</div>
-		</form>
-	</div>
-</div>
-<!-- /modal priority -->
-
-<!-- modal link -->
-<div id="modal-link" class="modal fade" data-backdrop="static" tabindex="-1" role="dialog">
-	<div class="modal-dialog modal-md modal-dialog-centered" role="document">
-		<form class="modal-content">
-			<div class="modal-header py-2">
-				<h5 class="modal-title"><i class="icon-pencil7 mr-1"></i>링크 수정</h5>
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-			</div>
-
-			<div class="modal-body">
-
-				<input type="hidden" name="menu_id" />
-
-				<div class="form-group row">
-					<label class="col-form-label col-lg-2">링크</label>
-					<div class="col-lg-10">
-						<input type="text" name="link" class="form-control" placeholder="링크&hellip;" required />
-						<small class="form-text text-muted">Base URL 이후부터 작성( /aaa/bbb/ccc )</small>
-					</div>
-				</div>
-			</div>
-
-			<div class="modal-footer">
-				<button type="button" class="btn btn-link" data-dismiss="modal"><i class="icon-cross2 font-size-base mr-1"></i>닫기</button>
-				<button type="submit" class="btn btn-primary"><i class="icon-checkmark3 font-size-base mr-1"></i>저장</button>
-			</div>
-		</form>
-	</div>
-</div>
-<!-- /modal link -->
-
-<!-- modal status -->
+<!-- Modal status -->
 <div id="modal-status" class="modal fade" data-backdrop="static" tabindex="-1" role="dialog">
-	<div class="modal-dialog modal-sm modal-dialog-centered" role="document">
-		<form class="modal-content">
-			<div class="modal-header py-2">
-				<h5 class="modal-title"><i class="icon-pencil7 mr-1"></i>상태 변경</h5>
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
+	<div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title"><i class="ph-pencil me-1"></i>Status</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
 			</div>
 
-			<div class="modal-body">
-
-				<input type="hidden" name="menu_id" />
-
-				<div class="form-group row">
-					<label class="col-form-label col-lg-2">상태</label>
-					<div class="col-lg-10">
-						<select name="is_used" class="form-control select">
-							<option value="Y">활성화</option>
-							<option value="N">비활성화</option>
-						</select>
+			<form class="form-horizontal">
+				<div class="modal-body">
+					<div class="row mb-3">
+						<div class="col-sm-12">
+							<input type="hidden" name="menu_id" />
+							<select name="is_used" class="form-control select">
+								<option value="Y">Enabled</option>
+								<option value="N">Disabled</option>
+							</select>
+						</div>
 					</div>
 				</div>
-			</div>
 
-			<div class="modal-footer">
-				<button type="button" class="btn btn-link" data-dismiss="modal"><i class="icon-cross2 font-size-base mr-1"></i>닫기</button>
-				<button type="submit" class="btn btn-primary"><i class="icon-checkmark3 font-size-base mr-1"></i>저장</button>
-			</div>
-		</form>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-link" data-bs-dismiss="modal"><i class="ph-x me-1"></i>Close</button>
+					<button type="submit" class="btn btn-primary"><i class="ph-check me-1"></i>Save</button>
+				</div>
+			</form>
+		</div>
 	</div>
 </div>
 <!-- /modal status -->
 
-<!-- modal item -->
+<!-- Modal item -->
 <div id="modal-item" class="modal fade" data-backdrop="static" tabindex="-1" role="dialog">
 	<div class="modal-dialog modal-dialog-centered" role="document">
-		<form class="modal-content">
-			<div class="modal-header py-2">
-				<h5 class="modal-title"><i class="icon-pencil7 mr-1"></i>정보 수정</h5>
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title"><i class="ph-user me-1"></i>Edit user info</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
 			</div>
 
-			<div class="modal-body">
+			<form class="form-horizontal">
+				<div class="modal-body">
+					<div class="row mb-3">
+						<label class="col-form-label col-sm-3">User status</label>
+						<div class="col-sm-9">
+							<input type="hidden" name="menu_id" />
+							<select name="is_used" class="form-control select">
+								<option value="Y">Enabled</option>
+								<option value="N">Disabled</option>
+							</select>
+						</div>
+					</div>
 
-				<input type="hidden" name="menu_id" />
+					<div class="row mb-3">
+						<label class="col-form-label col-sm-3">Menu name<span class="text-danger">*</span></label>
+						<div class="col-sm-9">
+							<input type="text" name="name" class="form-control" placeholder="Menu name" required />
+						</div>
+					</div>
 
-				<legend class="text-uppercase font-size-sm font-weight-bold">등록정보</legend>
+					<div class="row mb-3">
+						<label class="col-form-label col-sm-3">Menu ID<span class="text-danger">*</span></label>
+						<div class="col-sm-9">
+							<input type="text" name="menu_id" class="form-control" placeholder="Menu ID" required />
+						</div>
+					</div>
 
-				<div class="form-group row">
-					<label class="col-form-label col-lg-3">상태</label>
-					<div class="col-lg-9">
-						<select name="is_used" class="form-control select">
-							<option value="Y">활성화</option>
-							<option value="N">비활성화</option>
-						</select>
+					<div class="row mb-3">
+						<label class="col-form-label col-sm-3">Parent menu ID<span class="text-danger">*</span></label>
+						<div class="col-sm-9">
+							<input type="text" name="parent_menu_id" class="form-control" placeholder="Parent menu ID" required />
+						</div>
+					</div>
+
+					<div class="row mb-3">
+						<label class="col-form-label col-sm-3">Priority<span class="text-danger">*</span></label>
+						<div class="col-sm-9">
+							<input type="text" name="priority" class="form-control" placeholder="Priority" required />
+						</div>
+					</div>
+
+					<div class="row mb-3">
+						<label class="col-form-label col-sm-3">Priority<span class="text-danger">*</span></label>
+						<div class="col-sm-9">
+							<input type="text" name="link" class="form-control" placeholder="/aaa/bbb/ccc" required />
+							<div class="form-text">ex) [Base URL]/aaa/bbb/ccc</div>
+						</div>
+					</div>
+
+					<div class="row mb-3">
+						<label class="col-form-label col-sm-3">Link target</label>
+						<div class="col-sm-9">
+							<input type="text" name="link_target" class="form-control" placeholder="Link target" />
+							<div class="form-text">ex) _blank, _self, _parent, _top</div>
+						</div>
+					</div>
+
+					<div class="row mb-3">
+						<label class="col-form-label col-sm-3">Link class</label>
+						<div class="col-sm-9">
+							<input type="text" name="link_class" class="form-control" placeholder="Link class" />
+						</div>
+					</div>
+
+					<div class="row mb-3">
+						<label class="col-form-label col-sm-3">Before html</label>
+						<div class="col-sm-9">
+							<input type="text" name="before_html" class="form-control" placeholder="HTML" />
+						</div>
+					</div>
+
+					<div class="row mb-3">
+						<label class="col-form-label col-sm-3">Before html</label>
+						<div class="col-sm-9">
+							<input type="text" name="after_html" class="form-control" placeholder="HTML code" />
+						</div>
 					</div>
 				</div>
 
-				<div class="form-group row">
-					<label class="col-form-label col-lg-3">메뉴명<span class="text-danger ml-1">*</span></label>
-					<div class="col-lg-9">
-						<input type="text" name="name" class="form-control" placeholder="메뉴명&hellip;" required />
-					</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-link" data-bs-dismiss="modal"><i class="ph-x me-1"></i>Close</button>
+					<button type="submit" class="btn btn-primary"><i class="ph-check me-1"></i>Save</button>
 				</div>
-
-				<div class="form-group row">
-					<label class="col-form-label col-lg-3">일련번호<span class="text-danger ml-1">*</span></label>
-					<div class="col-lg-9">
-						<input type="text" name="menu_id" class="form-control" placeholder="메뉴 아이디&hellip;" disabled />
-					</div>
-				</div>
-
-				<div class="form-group row">
-					<label class="col-form-label col-lg-3">부모 일련번호<span class="text-danger ml-1">*</span></label>
-					<div class="col-lg-9">
-						<input type="text" name="parent_menu_id" class="form-control" placeholder="부모 일련번호&hellip;" required />
-					</div>
-				</div>
-
-				<div class="form-group row">
-					<label class="col-form-label col-lg-3">우선순위</label>
-					<div class="col-lg-9">
-						<input type="text" name="priority" class="form-control" placeholder="우선순위&hellip;" />
-					</div>
-				</div>
-
-				<div class="form-group row">
-					<label class="col-form-label col-lg-3">링크</label>
-					<div class="col-lg-9">
-						<input type="text" name="link" class="form-control" placeholder="링크&hellip;" />
-						<small class="form-text text-muted">Base URL 이후부터 작성( /aaa/bbb/ccc )</small>
-					</div>
-				</div>
-
-				<div class="form-group row">
-					<label class="col-form-label col-lg-3">링크 target</label>
-					<div class="col-lg-9">
-						<input type="text" name="link_target" class="form-control" placeholder="링크 target&hellip;" />
-					</div>
-				</div>
-
-				<div class="form-group row">
-					<label class="col-form-label col-lg-3">링크 class</label>
-					<div class="col-lg-9">
-						<input type="text" name="link_class" class="form-control" placeholder="링크 class&hellip;" />
-					</div>
-				</div>
-
-				<div class="form-group row">
-					<label class="col-form-label col-lg-3">메뉴 앞 HTML</label>
-					<div class="col-lg-9">
-						<input type="text" name="before_html" class="form-control" placeholder="HTML 입력&hellip;" />
-					</div>
-				</div>
-
-				<div class="form-group row">
-					<label class="col-form-label col-lg-3">메뉴 뒤 HTML</label>
-					<div class="col-lg-9">
-						<input type="text" name="after_html" class="form-control" placeholder="HTML 입력&hellip;" />
-					</div>
-				</div>
-
-			</div>
-
-			<div class="modal-footer">
-				<button type="button" class="btn btn-link" data-dismiss="modal"><i class="icon-cross2 font-size-base mr-1"></i>닫기</button>
-				<button type="submit" class="btn btn-primary"><i class="icon-checkmark3 font-size-base mr-1"></i>저장</button>
-			</div>
-		</form>
+			</form>
+		</div>
 	</div>
 </div>
 <!-- /modal item -->
@@ -506,11 +382,7 @@ var data = function() {
 				{
 					title: '<center>Menu name</center>',
 					data: 'name',
-					class: 'text-nowrap text-start',
-					render: function(data, type, row, meta) {
-						return '<a href="#" class="text-dark" data-bs-toggle="modal" data-bs-target="#modal-name">' + data + '</a>';
-					}
-
+					class: 'text-nowrap text-start'
 				},
 				{
 					title: '<center>Menu ID</center>',
@@ -520,27 +392,18 @@ var data = function() {
 				{
 					title: '<center>Parent menu ID</center>',
 					data: 'parent_menu_id',
-					class: 'text-nowrap text-end',
-					render: function(data, type, row, meta) {
-						return '<a href="#" class="text-dark" data-bs-toggle="modal" data-bs-target="#modal-parent-menu">' + data + '</a>';
-					}
+					class: 'text-nowrap text-end'
 				},
 				{
 					title: '<center>Priority</center>',
 					data: 'priority',
 					class: 'text-nowrap text-end',
-					sortable: false,
-					render: function(data, type, row, meta) {
-						return '<a href="#" class="text-dark" data-bs-toggle="modal" data-bs-target="#modal-priority">' + data + '</a>';
-					}
+					sortable: false
 				},
 				{
 					title: '<center>Link</center>',
 					data: 'link',
-					class: 'text-nowrap text-start',
-					render: function(data, type, row, meta) {
-						return '<a href="#" class="text-dark" data-bs-toggle="modal" data-bs-target="#modal-link">' + data + '</a>';
-					}
+					class: 'text-nowrap text-start'
 				},
 				{
 					title: '<center>Status</center>',
@@ -602,345 +465,148 @@ var data = function() {
 		$('.btn-create')
 			.attr('data-tooltip', 'tooltip')
 			.attr('data-bs-toggle', 'modal')
-			.attr('data-bs-target', '$modal-create');
+			.attr('data-bs-target', '#modal-create');
 	};
 
-	var _componentAddNew = function() {
-		const modalEl = $( '#modal-add' );
+	var _componentCreate = function() {
+		const modalEl = $('#modal-create');
 
-		modalEl.on( 'show.bs.modal', function(e) {
-			$( this ).find( 'form' )[0].reset();
+		modalEl.on('show.bs.modal', function(e) {
+			$(this).find('form')[0].reset();
+			$('select[name="is_used"]').val('Y').trigger('change');
+		});
 
-			$( 'select[name="is_used"]' ).val( 'Y' ).trigger( 'change' );
-		} );
+		modalEl.on('hidden.bs.modal', function(e) {
+			$(this).find('form')[0].reset();
+			$('select[name="is_used"]').val('Y').trigger('change');
+		});
 
-		modalEl.on( 'hidden.bs.modal', function(e) {
-			$( this ).find( 'form' )[0].reset();
+		$('form', modalEl).on('submit', function(e) {
+			var form_data = $(this).serialize();
 
-			$( 'select[name="is_used"]' ).val( 'Y' ).trigger( 'change' );
-		} );
-
-		$( 'form', modalEl ).on( 'submit', function(e) {
-			var form_data    = $( this ).serialize();
-
-			$.ajax( {
-				type        : 'POST',
-				url         : cp_params.base_url + '/preferences/management/menus/item_insert/',
-				data        : form_data,
-				dataType    : 'json',
-				error       : function( xhr, status, error ) {
-					alert( xhr.responseText );
+			$.ajax({
+				type: 'POST',
+				url: cp_params.base_url + '/preferences/setting/menus/item_insert/',
+				data: form_data,
+				dataType: 'json',
+				error: function(xhr, status, error) {
+					if (xhr.responseText) alert(xhr.responseText);
 				},
-				success     : function( data ) {
-					if ( data.confirm === 'Y' ) {
-						alert( data.message );
-						location.reload();
-					} else {
-						$( '#table' ).DataTable().ajax.reload( null, false );
-						$( '#modal-add' ).modal( 'hide' );
-						alert( data.message );
-					}
+				success: function(data) {
+					$('#table').DataTable().ajax.reload(null, false);
+					$('#modal-create').modal('hide');
+					if (data.message) alert(data.message);
 				}
-			} );
+			});
 			return false;
-		} );
-	}
-
-	var _componentName = function() {
-		const modalEl = $( '#modal-name' );
-
-		modalEl.on( 'show.bs.modal', function(e) {
-			let target_id = $( e.relatedTarget ).closest( 'tr' ).data( 'target-id' );
-
-			axios.get( cp_params.base_url + '/preferences/management/menus/item_get/' + target_id, {
-			} ).then( response => {
-				$.each( response.data, function( i, v ) {
-					var the_el = $( '[name="' + i + '"]' );
-					if ( the_el.length > 0 ) {
-						the_el.val( v );
-						if ( the_el.is( "select" ) ) {
-							the_el.change();
-						}
-					}
-				} )
-			} );
-		} );
-
-		modalEl.on( 'hidden.bs.modal', function(e) {
-			$( this ).find( 'form' )[0].reset();
-		} );
-
-		$( 'form', modalEl ).on( 'submit', function(e) {
-			let target_id = $( '[name="menu_id"]' ).val();
-			let form_data = $( this ).serialize();
-
-			$.ajax( {
-				type        : 'POST',
-				url         : cp_params.base_url + '/preferences/management/menus/name_put/' + target_id,
-				data        : form_data,
-				dataType    : 'json',
-				error       : function( xhr, status, error ) {
-					alert( xhr.responseText );
-				},
-				success     : function( data ) {
-					$( '#table' ).DataTable().ajax.reload( null, false );
-					$( '#modal-name' ).modal( 'hide' );
-					alert( data.message );
-				}
-			} );
-			return false;
-		} );
-	}
-
-	var _componentParentMenu = function() {
-		const modalEl = $( '#modal-parent-menu' );
-
-		modalEl.on( 'show.bs.modal', function(e) {
-			let target_id = $( e.relatedTarget ).closest( 'tr' ).data( 'target-id' );
-
-			axios.get( cp_params.base_url + '/preferences/management/menus/item_get/' + target_id, {
-			} ).then( response => {
-				$.each( response.data, function( i, v ) {
-					var the_el = $( '[name="' + i + '"]' );
-					if ( the_el.length > 0 ) {
-						the_el.val( v );
-						if ( the_el.is( "select" ) ) {
-							the_el.change();
-						}
-					}
-				} )
-			} );
-		} );
-
-		modalEl.on( 'hidden.bs.modal', function(e) {
-			$( this ).find( 'form' )[0].reset();
-		} );
-
-		$( 'form', modalEl ).on( 'submit', function(e) {
-			let target_id = $( '[name="menu_id"]' ).val();
-			let form_data = $( this ).serialize();
-
-			$.ajax( {
-				type        : 'POST',
-				url         : cp_params.base_url + '/preferences/management/menus/paren_menu_put/' + target_id,
-				data        : form_data,
-				dataType    : 'json',
-				error       : function( xhr, status, error ) {
-					alert( xhr.responseText );
-				},
-				success     : function( data ) {
-					$( '#table' ).DataTable().ajax.reload( null, false );
-					$( '#modal-parent-menu').modal( 'hide' );
-					alert( data.message );
-				}
-			} );
-			return false;
-		} );
-	}
-
-	var _componentPriority = function() {
-		const modalEl = $( '#modal-priority' );
-
-		modalEl.on( 'show.bs.modal', function(e) {
-			let target_id = $( e.relatedTarget ).closest( 'tr' ).data( 'target-id' );
-
-			axios.get( cp_params.base_url + '/preferences/management/menus/item_get/' + target_id, {
-			} ).then( response => {
-				$.each( response.data, function( i, v ) {
-					var the_el = $( '[name="' + i + '"]' );
-					if ( the_el.length > 0 ) {
-						the_el.val( v );
-						if ( the_el.is( "select" ) ) {
-							the_el.change();
-						}
-					}
-				} )
-			} );
-		} );
-
-		modalEl.on( 'hidden.bs.modal', function(e) {
-			$( this ).find( 'form' )[0].reset();
-		} );
-
-		$( 'form', modalEl ).on( 'submit', function(e) {
-			let target_id = $( '[name="menu_id"]' ).val();
-			let form_data = $( this ).serialize();
-
-			$.ajax( {
-				type        : 'POST',
-				url         : cp_params.base_url + '/preferences/management/menus/priority_put/' + target_id,
-				data        : form_data,
-				dataType    : 'json',
-				error       : function( xhr, status, error ) {
-					alert( xhr.responseText );
-				},
-				success     : function( data ) {
-					$( '#table' ).DataTable().ajax.reload( null, false );
-					$( '#modal-priority' ).modal( 'hide' );
-					alert( data.message );
-				}
-			} );
-			return false;
-		} );
-	}
-
-	var _componentLink = function() {
-		const modalEl = $( '#modal-link' );
-
-		modalEl.on( 'show.bs.modal', function(e) {
-			let target_id = $( e.relatedTarget ).closest( 'tr' ).data( 'target-id' );
-
-			axios.get( cp_params.base_url + '/preferences/management/menus/item_get/' + target_id, {
-			} ).then( response => {
-				$.each( response.data, function( i, v ) {
-					var the_el = $( '[name="' + i + '"]' );
-					if ( the_el.length > 0 ) {
-						the_el.val( v );
-						if ( the_el.is( "select" ) ) {
-							the_el.change();
-						}
-					}
-				} )
-			} );
-		} );
-
-		modalEl.on( 'hidden.bs.modal', function(e) {
-			$( this ).find( 'form' )[0].reset();
-		} );
-
-		$( 'form', modalEl ).on( 'submit', function(e) {
-			let target_id = $( '[name="menu_id"]' ).val();
-			let form_data = $( this ).serialize();
-
-			$.ajax( {
-				type        : 'POST',
-				url         : cp_params.base_url + '/preferences/management/menus/link_put/' + target_id,
-				data        : form_data,
-				dataType    : 'json',
-				error       : function( xhr, status, error ) {
-					alert( xhr.responseText );
-				},
-				success     : function( data ) {
-					$( '#table' ).DataTable().ajax.reload( null, false );
-					$( '#modal-link' ).modal( 'hide' );
-					alert( data.message );
-				}
-			} );
-			return false;
-		} );
-	}
+		});
+	};
 
 	var _componentStatus = function() {
-		const modalEl = $( '#modal-status' );
+		const modalEl = $('#modal-status');
 
-		modalEl.on( 'show.bs.modal', function(e) {
-			let target_id = $( e.relatedTarget ).closest( 'tr' ).data( 'target-id' );
+		modalEl.on('show.bs.modal', function(e) {
+			let target_id = $(e.relatedTarget).closest('tr').data('target-id');
 
-			axios.get( cp_params.base_url + '/preferences/management/menus/item_get/' + target_id, {
-			} ).then( response => {
-				$.each( response.data, function( i, v ) {
-					var the_el = $( '[name="' + i + '"]' );
-					if ( the_el.length > 0 ) {
-						the_el.val( v );
-						if ( the_el.is( "select" ) ) {
+			axios.get(cp_params.base_url + '/preferences/setting/menus/item_get/' + target_id, {
+			}).then(response => {
+				$.each(response.data, function(i, v) {
+					var the_el = $('[name="' + i + '"]');
+					if (the_el.length > 0) {
+						the_el.val(v);
+						if (the_el.is("select")) {
 							the_el.change();
 						}
 					}
-				} )
-			} );
-		} );
+				})
+			});
+		});
 
-		modalEl.on( 'hidden.bs.modal', function(e) {
-			$( this ).find( 'form' )[0].reset();
+		modalEl.on('hidden.bs.modal', function(e) {
+			$(this).find('form')[0].reset();
+			$('select[name="is_used"]').val('Y').trigger('change');
+		});
 
-			$( 'select[name="is_used"]' ).val( 'Y' ).trigger( 'change' );
-		} );
+		$('form', modalEl).on('submit', function(e) {
+			let target_id = $('[name="menu_id"]').val();
+			let form_data = $(this).serialize();
 
-		$( 'form', modalEl ).on( 'submit', function(e) {
-			let target_id = $( '[name="menu_id"]' ).val();
-			let form_data = $( this ).serialize();
-
-			$.ajax( {
-				type        : 'POST',
-				url         : cp_params.base_url + '/preferences/management/menus/status_put/' + target_id,
-				data        : form_data,
-				dataType    : 'json',
-				error       : function( xhr, status, error ) {
-					alert( xhr.responseText );
+			$.ajax({
+				type: 'POST',
+				url: cp_params.base_url + '/preferences/management/menus/status_put/' + target_id,
+				data: form_data,
+				dataType: 'json',
+				error: function(xhr, status, error) {
+					if (xhr.responseText) alert(xhr.responseText);
 				},
-				success     : function( data ) {
-					$( '#table' ).DataTable().ajax.reload( null, false );
-					$( '#modal-status' ).modal( 'hide' );
-					alert( data.message );
+				success: function(data) {
+					$('#table').DataTable().ajax.reload(null, false);
+					$('#modal-status').modal('hide');
+					if (data.message) alert(data.message);
 				}
-			} );
+			});
 			return false;
-		} );
-	}
+		});
+	};
 
 	var _componentItem = function() {
-		const modalEl = $( '#modal-item' );
+		const modalEl = $('#modal-item');
 
-		modalEl.on( 'show.bs.modal', function(e) {
-			let target_id = $( e.relatedTarget ).closest( 'tr' ).data( 'target-id' );
+		modalEl.on('show.bs.modal', function(e) {
+			let target_id = $(e.relatedTarget).closest('tr').data('target-id');
 
-			axios.get( cp_params.base_url + '/preferences/management/menus/item_get/' + target_id, {
-			} ).then( response => {
-				$.each( response.data, function( i, v ) {
-					var the_el = $( '[name="' + i + '"]' );
-					if ( the_el.length > 0 ) {
-						the_el.val( v );
-						if ( the_el.is( "select" ) ) {
+			axios.get(cp_params.base_url + '/preferences/setting/menus/item_get/' + target_id, {
+			}).then(response => {
+				$.each(response.data, function(i, v) {
+					var the_el = $('[name="' + i + '"]');
+					if (the_el.length > 0) {
+						the_el.val(v);
+						if (the_el.is("select")) {
 							the_el.change();
 						}
 					}
-				} )
-			} );
-		} );
+				})
+			});
+		});
 
-		modalEl.on( 'hidden.bs.modal', function(e) {
-			$( this ).find( 'form' )[0].reset();
+		modalEl.on('hidden.bs.modal', function(e) {
+			$(this).find('form')[0].reset();
+			$('select[name="is_used"]').val('Y').trigger('change');
+		});
 
-			$( 'select[name="is_used"]' ).val( 'Y' ).trigger( 'change' );
-		} );
+		$('form', modalEl).on('submit', function(e) {
+			let target_id = $('[name="menu_id"]').val();
+			let form_data = $(this).serialize();
 
-		$( 'form', modalEl ).on( 'submit', function(e) {
-			let target_id = $( '[name="menu_id"]' ).val();
-			let form_data   = $( this ).serialize();
-
-			$.ajax( {
-				type        : 'POST',
-				url         : cp_params.base_url + '/preferences/management/menus/item_put/' + target_id,
-				data        : form_data,
-				dataType    : 'json',
-				error       : function( xhr, status, error ) {
-					alert( xhr.responseText );
+			$.ajax({
+				type: 'POST',
+				url: cp_params.base_url + '/preferences/setting/menus/item_put/' + target_id,
+				data: form_data,
+				dataType: 'json',
+				error: function(xhr, status, error) {
+					if (xhr.responseText) alert(xhr.responseText);
 				},
-				success     : function( data ) {
-					$( '#table' ).DataTable().ajax.reload( null, false );
-					$( '#modal-item' ).modal( 'hide' );
-					alert( data.message );
+				success: function(data) {
+					$('#table').DataTable().ajax.reload(null, false);
+					$('#modal-item').modal('hide');
+					if (data.message) alert(data.message);
 				}
-			} );
+			});
 			return false;
-		} );
-	}
+		});
+	};
 
 	return {
 		init: function() {
 			_componentDatatable();
-			_componentAddNew();
-			_componentName();
-			_componentParentMenu();
-			_componentPriority();
-			_componentLink();
+			_componentCreate();
 			_componentStatus();
 			_componentItem();
 		}
 	}
 }();
 
-document.addEventListener( 'DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() {
 	data.init();
-} );
+});
 </script>
