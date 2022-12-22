@@ -9,7 +9,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<li class="nav-item">
 				<div class="d-flex align-items-center mx-md-1">
 					<code>
-						<span class="d-none d-md-inline-block ms-2">
+						<span class="d-none d-md-inline-block">
 							<?php echo  (ENVIRONMENT === 'development') ?  'CI Version:' : '' ?>
 						</span>
 						<span>
