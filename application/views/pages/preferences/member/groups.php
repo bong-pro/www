@@ -168,8 +168,8 @@ var data = function() {
 
 		const tableEl = $('table.datatables');
 
-		var datatable = tableEl.DataTable( {
-			ajax : {
+		var datatable = tableEl.DataTable({
+			ajax: {
 				url: cp_params.base_url + '/preferences/member/groups/list',
 				type: 'GET',
 				data: function(d) {
@@ -216,7 +216,7 @@ var data = function() {
 					});
 					return data;
 				},
-				dataSrc : function(response){
+				dataSrc: function(response) {
 					response.recordsTotal = response.total_rows;
 					response.recordsFiltered = response.total_rows;
 					response.draw++;
@@ -229,7 +229,7 @@ var data = function() {
 					trigger: 'hover'
 				});
 			},
-			buttons : [
+			buttons: [
 				{
 					titleAttr: 'Create',
 					text: '<i class="ph-plus"></i>',

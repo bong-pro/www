@@ -244,7 +244,7 @@ var data = function() {
 
 		const tableEl = $('table.datatables');
 
-		var datatable = tableEl.DataTable( {
+		var datatable = tableEl.DataTable({
 			ajax: {
 				url: cp_params.base_url + '/preferences/member/users/list',
 				type: 'GET',
@@ -291,7 +291,7 @@ var data = function() {
 					});
 					return data;
 				},
-				dataSrc: function(response){
+				dataSrc: function(response) {
 					response.recordsTotal = response.total_rows;
 					response.recordsFiltered = response.total_rows;
 					response.draw++;
