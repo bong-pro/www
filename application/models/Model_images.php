@@ -18,9 +18,13 @@ class Model_images extends CP_Model
 	 * search fields=keyword
 	 */
 	protected $search_keyword_fields = array(
-		'image_id',
 		'name',
 	);
+
+	/**
+	 * search fields=start_end
+	 */
+	protected $search_start_end_field = 'created_at';
 
 	public function list($args=array())
 	{

@@ -326,6 +326,20 @@ var CodePress = function () {
 		});
 	};
 
+	// Daterange picker
+	const _componentDaterange = function() {
+		if (!$().daterangepicker) {
+			console.warn('Warning - daterangepicker.js is not loaded.');
+			return;
+		}
+
+		// Display date dropdowns
+		$('.daterange-datemenu').daterangepicker({
+			parentEl: '.content-inner',
+			showDropdowns: true
+		});
+	};
+
 	return {
 		initBeforeLoad: function() {
 			_componentDropzone();
@@ -341,6 +355,7 @@ var CodePress = function () {
 			_componentVailidation();
 			_componentDatatable();
 			_componentLightbox();
+			_componentDaterange();
 		},
 
 		// Enable transitions when page is fully loaded

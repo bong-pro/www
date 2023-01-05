@@ -1,9 +1,12 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+$this->document->add_js('moment', base_url('template/assets/js/vendor/ui/moment/moment.min.js'));
 $this->document->add_js('select2', base_url('template/assets/js/vendor/forms/selects/select2.min.js'));
-
 $this->document->add_js('glightbox', base_url('template/assets/js/vendor/media/glightbox.min.js'));
+
+$this->document->add_js('daterangepicker', base_url('template/assets/js/vendor/pickers/daterangepicker.js'));
+$this->document->add_js('datepicker', base_url('template/assets/js/vendor/pickers/datepicker.min.js'));
 ?>
 
 <!-- Search field -->
@@ -12,10 +15,16 @@ $this->document->add_js('glightbox', base_url('template/assets/js/vendor/media/g
 		<h5 class="mb-0"><i class="ph-image me-1"></i><?php echo $page_title; ?></h5>
 	</div>
 	<form action="#" class="card-body d-sm-flex" id="img_form" onsubmit="return false">
-		<div class="mb-3 wmin-sm-300">
+		<div class="mb-3 wmin-sm-200">
+			<div class="input-group">
+				<input type="text" class="form-control daterange-datemenu" id="date" value="" />
+				<span class="input-group-text"><i class="ph-calendar"></i></span>
+			</div>
+		</div>
+
+		<div class="mb-3 wmin-sm-300 mx-sm-3 mb-sm-0">
 			<select class="form-select mb-3 mb-sm-0 select" name="group_id" id="group_id" data-allow-clear="true" data-placeholder="No selected&hellip;">
 				<option></option>
-				<option value="all">All</option>
 				<?php foreach ($groups['list'] as $item) : ?>
 					<?php $disabled = $item['group_id'] == '1' && $this->user->item('group_id') !== '1' ? 'disabled' : ''; ?>
 					<option value="<?php echo $item['group_id']; ?>" <?php echo $disabled; ?>><?php echo $item['name']; ?></option>
@@ -23,8 +32,8 @@ $this->document->add_js('glightbox', base_url('template/assets/js/vendor/media/g
 			</select>
 		</div>
 
-		<div class="form-control-feedback form-control-feedback-start flex-grow-1 ms-sm-3 mb-sm-0">
-			<input type="search" class="form-control search-filter-item" name="keyword" id="keyword" value="" placeholder="Search">
+		<div class="form-control-feedback form-control-feedback-start flex-grow-1">
+			<input type="search" class="form-control search-filter-item" name="keyword" id="keyword" value="" placeholder="Search" />
 			<div class="form-control-feedback-icon">
 				<i class="ph-magnifying-glass"></i>
 			</div>
@@ -41,20 +50,49 @@ $this->document->add_js('glightbox', base_url('template/assets/js/vendor/media/g
 var data = function() {
 
 	var _componentImageList = function() {
-		function imgGrid(v) {
-			var form_data = {
-				keyword: '',
-				group_id: '',
-				type: 'A',
-				is_used: 'Y'
+		function dataFilterCheck() {
+			var today = new Date().toLocaleDateString("en-US");
+				today = moment(today).format("MM/DD/YYYY");
+
+			var dateArray = $('#date').val();
+				dateArray = dateArray.split(' - ');
+
+			dateStart = today == dateArray[0] && today == dateArray[1] ? '' : dateArray[0];
+			dateEnd = today == dateArray[0] && today == dateArray[1] ? '' : dateArray[1];
+
+			var data = {
+				group_id: $('#group_id option:selected').val(),
+				keyword: $('#keyword').val(),
+				start: dateStart,
+				end: dateEnd
 			}
-			form_data.keyword = v ? v.keyword : '';
-			form_data.group_id = v ? v.group_id : '';
+
+			return data;
+		}
+
+		function dataFormCheck(e) {
+			data = {type: 'A', is_used: 'Y', group_id: '', keyword: '', limit: 0, start: '', end: ''}
+			if (e) {
+				$.each(e, function(i, v) {
+					i == 'keyword' ? $('#keyword').val(v) : '';
+					if (v) data[i] = v;
+				});
+			}
+			return data;
+		}
+
+		const dataEl = $('#image-grid');
+
+		imgGrid();
+		function imgGrid(e) {
+			dataEl.empty();
+
+			var formData = dataFormCheck(e);
 
 			$.ajax({
 				url: cp_params.base_url + '/main/nail/products/list',
 				type: 'GET',
-				data: form_data,
+				data: formData,
 				success: function(data) {
 					var html = '';
 
@@ -90,32 +128,17 @@ var data = function() {
 			});
 		};
 
-		function imgSearch() {
-			$('#image-grid').empty();
-
-			var select = $('#group_id option:selected').val();
-
-			select = select == 'all' ? '' : select;
-
-			var v = {
-				keyword: $('#keyword').val(),
-				group_id: select
-			}
-
-			imgGrid(v);
-
-			$('#keyword').val(v.keyword);
-		}
-
 		$(':input.search-filter-item').on('input', function() {
-			imgSearch();
+			imgGrid(dataFilterCheck());
 		});
 
 		$('#group_id').on('change', function() {
-			imgSearch();
+			imgGrid(dataFilterCheck());
 		});
 
-		return imgGrid();
+		$('#date').on('change', function() {
+			imgGrid(dataFilterCheck());
+		});
 	};
 
 	return {
